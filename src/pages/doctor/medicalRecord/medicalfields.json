@@ -1,0 +1,26 @@
+{
+  "firstName": {
+    "type": "String"
+  },
+  "middleName": {
+    "type": "String"
+  },
+  "lastName": {
+    "type": "String"
+  },
+  "gender": {
+    "type": "String"
+  },
+  "mobile": {
+    "type": "String"
+  },
+  "birthday": {
+    "type": "String"
+  },
+  "address": {
+    "type": "String"
+  },
+  "email": {
+    "type": "String"
+  }
+}

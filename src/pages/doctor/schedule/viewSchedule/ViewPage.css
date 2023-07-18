@@ -1,0 +1,9 @@
+.highlighted-date {
+    background-color: #b6e6bd;
+    /* Add other styles as needed */
+  }
+
+  .calendar-container {
+    width: 300px; /* Set the desired width */
+    margin: 0 auto; /* Optional: Center the calendar horizontally */
+  }

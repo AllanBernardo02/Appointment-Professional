@@ -86,8 +86,9 @@ class BaseListPresenter {
 
   onClickItem(index) {
     const object = this.objects[index];
+    console.log("obbs", object);
     const collection = this.view.getCollectionName();
-    this.view.navigateTo("/collection/" + collection + "/form/" + object.id);
+    this.view.navigateTo("/collection/" + collection + "/form/" + index.id);
   }
 
   onClickAdd() {

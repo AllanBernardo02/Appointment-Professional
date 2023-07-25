@@ -45,36 +45,36 @@ class MedicalRecordPage extends BaseListPage {
 
   onClickItem(index, field) {
     console.log("Index", field);
-    this.presenter.onClickItem(index, field);
+    this.presenter.onClickItem(index);
   }
 
   onClickHistory(index, field) {
     const object = this.state.objects[index];
+    console.log("history", index);
 
-    this.navigateTo("/consulationHistory/" + object.id);
+    this.navigateTo("/consulationHistory/" + index.id);
   }
 
   onCollapse(object, index) {
-    console.log("obs", object);
+    console.log("obs", index);
     return (
       <div>
         <div className="d-flex">
           <div>
-            {object["profile"] && (
+            {index["profile"] && (
               <img
                 style={{ width: "100px", height: "100px" }}
-                src={object["profile"]}
+                src={index["profile"]}
                 alt=""
               />
             )}
-            {!object["profile"] && <i className="bi bi-person-circle fs-1"></i>}
+            {!index["profile"] && <i className="bi bi-person-circle fs-1"></i>}
           </div>
           <ul className="list-unstyled ms-1 text-truncate">
             <li>
               <span className="ms-2 fw-light fw-bold">Name: </span>
               <span className="fs-sm text-nowrap">
-                {object["firstName"]} {object["middleName"]}{" "}
-                {object["lastName"]}
+                {index["firstName"]} {object["middleName"]} {object["lastName"]}
               </span>
             </li>
             <li>

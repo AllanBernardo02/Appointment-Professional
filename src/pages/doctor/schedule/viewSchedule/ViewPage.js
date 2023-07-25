@@ -94,7 +94,10 @@ class ViewPage extends BaseListPage {
             className="mt-4"
             style={{ display: "flex", justifyContent: "center" }}
           >
-            <div style={{ backgroundColor: "white", padding: "20px" }}>
+            <div
+              className="mt-3"
+              style={{ backgroundColor: "white", padding: "20px" }}
+            >
               {this.getTimeSlots() || (
                 <p>No time slots available for the selected date.</p>
               )}

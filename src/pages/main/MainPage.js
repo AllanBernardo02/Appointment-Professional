@@ -26,6 +26,9 @@ import Tutorial from "../Tutorial";
 import ConsultationPage from "../doctor/medicalRecord/consultationHistory/ConsultationPage";
 import ConsultationFormPage from "../doctor/medicalRecord/consultationHistory/ConsultationFormPage";
 import ViewPage from "../doctor/schedule/viewSchedule/ViewPage";
+import ChatPage from "../chat/ChatPage";
+import ChatUserPage from "../chat-user/ChatUserPage";
+import ChatMessagePage from "../chat-message/ChatMessagePage";
 
 const scheduleMenus = [
   {
@@ -50,7 +53,7 @@ const menus = [
   {
     name: "Chat",
     icon: "bi bi-chat-dots",
-    route: "/",
+    route: "/chat",
     access: ["ADMIN"],
   },
   {
@@ -180,6 +183,9 @@ class MainPage extends BasePage {
               element={<ConsultationFormPage />}
             />
             <Route path={"/view-schedules"} element={<ViewPage />} />
+            <Route exact path={"/chat"} element={<ChatPage />} />
+            <Route exact path={"/chat/user"} element={<ChatUserPage />} />
+            <Route exact path={"/message"} element={<ChatMessagePage />} />
           </Routes>
         </main>
       </Layout>

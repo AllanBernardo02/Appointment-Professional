@@ -43,16 +43,16 @@ class MedicalRecordPage extends BaseListPage {
     return "patient";
   }
 
-  onClickItem(index, field) {
-    console.log("Index", field);
-    this.presenter.onClickItem(index);
-  }
+  // onClickItem(index) {
+  //   // console.log("Index", field);
+  //   this.presenter.onClickItem(index);
+  // }
 
   onClickHistory(index, field) {
     const object = this.state.objects[index];
     console.log("history", index);
 
-    this.navigateTo("/consulationHistory/" + index.id);
+    this.navigateTo("/consulationHistory/" + object.id);
   }
 
   onCollapse(object, index) {
@@ -128,7 +128,7 @@ class MedicalRecordPage extends BaseListPage {
           className="btn btn-secondary btn-sm ms-3"
           style={{ backgroundColor: "red", color: "white" }}
         >
-          PRINT CERTIFICATE
+          PRINT MEDICAL CERTIFICATE
         </button>
       </div>
     );
@@ -152,43 +152,43 @@ class MedicalRecordPage extends BaseListPage {
             />
             <Table
               fields={schema.fields}
-              // fields={medicalfields}
+              groups={schema.groups}
               objects={objects}
               className="mt-3"
-              onCollapse={this.onCollapse.bind(this)}
-              onClickItem={this.onClickItem.bind(this)}
-              // excludeFields={Object.keys(schema.fields).reduce(
-              //   (acc, key) => {
-              //     const options = schema.fields[key];
-              //     if (options.read === false) {
-              //       acc.push(key);
-              //     }
-              //     switch (options._type || options.type) {
-              //       case "Relation":
-              //       case "Array":
-              //       case "Object":
-              //       case "File":
-              //         acc.push(key);
-              //         break;
-              //       default:
-              //     }
-              //     return acc;
-              //   },
-              //   ["acl", "password"]
-              // )}
+              selectable
+              collapsable
+              // onCollapse={this.onCollapse.bind(this)}
+              // onClickItem={this.onClickItem.bind(this)}
               excludeFields={Object.keys(schema.fields).filter(
                 (key) =>
                   key !== "firstName" &&
                   key !== "middleName" &&
                   key !== "lastName"
               )}
+              actions={[
+                {
+                  label: "EDIT",
+                  onClick: this.onClickItem.bind(this),
+                  className: "btn btn-primary ms-2",
+                },
+                {
+                  label: "CONSULTATION HISTORY",
+                  onClick: this.onClickHistory.bind(this),
+                  className: "btn btn-info ms-2",
+                },
+                {
+                  label: "PRINT CERTIFICATE",
+                  // onClick: this.onClickPrint.bind(this),
+                  className: "btn btn-danger ms-2",
+                },
+              ]}
             />
           </div>
         </div>
 
         <div className="position-fixed bottom-0 end-0 m-4">
           <Button
-            className="shadow-sm bg-primary"
+            className="shadow-sm bg-primary btn btn-primary"
             onClick={this.onClickAdd.bind(this)}
             style={{ width: "50px", height: "50px", borderRadius: "25px" }}
           >

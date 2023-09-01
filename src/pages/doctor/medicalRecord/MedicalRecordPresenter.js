@@ -14,7 +14,7 @@ class MedicalRecordPresenter extends BaseListPresenter {
       count: true,
       limit: this.limit,
       skip: skip,
-      // where: this.where,
+      where: this.where,
       where: {
         ...this.where,
         createdBy: user.id,
@@ -36,6 +36,11 @@ class MedicalRecordPresenter extends BaseListPresenter {
     } finally {
       this.view.hideProgress();
     }
+  }
+
+  onClickAdd() {
+    const collection = this.view.getCollectionName();
+    this.view.navigateTo("/medical-form");
   }
 }
 

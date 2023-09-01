@@ -26,7 +26,7 @@ class CreateSchedulePage extends BaseFormPage {
     return "schedules";
   }
   render() {
-    const schema = this.getSchema("schedules");
+    const schema = this.getSchema(this.getCollectionName());
     const object = this.state.object;
     return (
       <>
@@ -46,12 +46,12 @@ class CreateSchedulePage extends BaseFormPage {
                   <div className="px-2">
                     <hr className="dropdown-divider" />
                     <h5>Set Date</h5>
-                    <FormFactory
-                      schema={schema}
-                      object={object}
-                      onChange={this.onChange.bind(this)}
-                    />
                   </div>
+                  <FormFactory
+                    schema={schema}
+                    object={object}
+                    onChange={this.onChange.bind(this)}
+                  />
                 </div>
 
                 <div className="mt-3">

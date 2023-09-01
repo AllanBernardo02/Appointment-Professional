@@ -32,7 +32,7 @@ class CreateSchedulePresenter extends BaseFormPresenter {
       this.change.createdBy = user.id; // new add
     }
     try {
-      await this.upsertUseCase.execute(collection, this.change);
+      // await this.upsertUseCase.execute(collection, this.change);
     } catch (error) {
       throw error; // rethrow the error to be caught by the caller
     }

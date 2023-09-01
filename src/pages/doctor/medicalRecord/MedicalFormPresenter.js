@@ -1,25 +1,37 @@
-import BaseFormPage from "../../../base/BaseFormPage";
 import BaseFormPresenter from "../../../base/BaseFormPresenter";
-import BaseListPresenter from "../../../base/BaseListPresenter";
 
 class MedicalFormPresenter extends BaseFormPresenter {
+  async submit() {
+    if (Object.values(this.change).length === 0) {
+      this.view.navigateBack();
+      return;
+    }
+    try {
+      this.view.showProgress();
+      await this.save();
+      this.view.hideProgress();
+      this.view.showSuccessSnackbar("Medical form successfully saved!");
+      this.view.navigateBack();
+    } catch (error) {
+      this.view.hideProgress();
+      this.view.showError(error);
+    }
+  }
+
   async save() {
     const collection = this.view.getCollectionName();
     const object = this.view.getObject();
-    const user = this.view.getCurrentUser(); // new add
-    console.log("object get", object);
+    const user = this.view.getCurrentUser();
     if (object.id) {
       this.change.id = object.id;
-      console.log("this changessss", this.change);
     } else {
       this.change.acl = this.view.getAcl();
-      this.change.createdBy = user.id; // new add
-      console.log("this change", this.change);
+      this.change.createdBy = user.id;
     }
     try {
       await this.upsertUseCase.execute(collection, this.change);
     } catch (error) {
-      throw error; // rethrow the error to be caught by the caller
+      throw error;
     }
   }
 }

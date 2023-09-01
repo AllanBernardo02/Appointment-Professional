@@ -4,12 +4,13 @@ import BasePage from "../../../base/BasePage";
 import DoctorDashboardCard from "../../../components/dashboard/DoctorDashboardCard";
 import NavBar from "../../../components/navbar";
 import withRouter from "../../../withRouter";
+// import { NavBar } from "nq-component";
 
 class DashboardDoctorPage extends BasePage {
   render() {
     return (
       <>
-        <NavBar className="shadow-sm" />
+        <NavBar />
         <div className="container p-3 px-lg-5 py-lg-4 overflow-auto">
           <h2 className="text-capitalize mt-3">Dashboard</h2>
           {/* <div className="d-flex">

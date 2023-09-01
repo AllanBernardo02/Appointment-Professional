@@ -35,8 +35,8 @@ class BaseFormPresenter {
     }
   }
 
-  onChange(field, data) {
-    this.change[field] = data;
+  onChange(value, field) {
+    this.change[field] = value;
   }
 
   async save() {
@@ -46,7 +46,6 @@ class BaseFormPresenter {
       this.change.id = object.id;
     } else {
       this.change.acl = this.view.getAcl();
-      // this.change.createdBy = user.id; // new add
     }
     try {
       await this.upsertUseCase.execute(collection, this.change);

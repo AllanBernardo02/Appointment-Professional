@@ -19,6 +19,7 @@ import {
 import { exportCSVUseCase } from "../../../usecases/csv/usecases";
 import fields from "./fields.json";
 import camelToTitleCase from "nq-component/dist/camelToTitleCase";
+import BasePage from "../../../base/BasePage";
 
 const tabs = [
   {

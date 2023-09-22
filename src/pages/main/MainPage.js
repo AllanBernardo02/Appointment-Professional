@@ -182,7 +182,7 @@ class MainPage extends BasePage {
               path={"/consultation-form/:id"}
               element={<ConsultationFormPage />}
             />
-            <Route path={"/view-schedules"} element={<ViewPage />} />
+            <Route path={"/view-schedules"} element={<ViewPage />} />s
             <Route exact path={"/chat"} element={<ChatPage />} />
             <Route exact path={"/chat/user"} element={<ChatUserPage />} />
             <Route exact path={"/message"} element={<ChatMessagePage />} />

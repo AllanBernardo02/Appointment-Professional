@@ -93,6 +93,7 @@ class ChatMessagePresenter {
       return this.findObjectUseCase
         .execute("messages", query)
         .then((messages) => {
+          console.log("real", messages);
           this.view.setMessages(messages);
         })
         .catch((error) => {

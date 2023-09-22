@@ -31,6 +31,7 @@ class ChatUserPage extends BaseListPage {
   }
 
   onClickUser(user) {
+    console.log("receiver", user);
     this.presenter.onClickUser(user);
   }
 

@@ -113,7 +113,7 @@ class ChatMessagePage extends BasePage {
     const message = this.state.message;
     const showClose = chat.type === "SUPPORT" && chat.user.id !== sender.id;
     console.log(chat);
-    console.log(message);
+    console.log("message", messages);
     console.log(messages);
     return (
       <>

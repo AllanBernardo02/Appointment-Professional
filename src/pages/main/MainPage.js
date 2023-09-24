@@ -29,6 +29,7 @@ import ViewPage from "../doctor/schedule/viewSchedule/ViewPage";
 import ChatPage from "../chat/ChatPage";
 import ChatUserPage from "../chat-user/ChatUserPage";
 import ChatMessagePage from "../chat-message/ChatMessagePage";
+import HomePage from "../home/HomePage";
 
 const scheduleMenus = [
   {
@@ -44,6 +45,12 @@ const scheduleMenus = [
 ];
 
 const menus = [
+  {
+    name: "Home",
+    icon: "bi bi-layout-text-window-reverse",
+    route: "/",
+    access: ["PROFESSIONAL"],
+  },
   {
     name: "Dashboard",
     icon: "bi bi-layout-text-window-reverse",
@@ -186,6 +193,7 @@ class MainPage extends BasePage {
             <Route exact path={"/chat"} element={<ChatPage />} />
             <Route exact path={"/chat/user"} element={<ChatUserPage />} />
             <Route exact path={"/message"} element={<ChatMessagePage />} />
+            <Route path={"/"} element={<HomePage />} />
           </Routes>
         </main>
       </Layout>

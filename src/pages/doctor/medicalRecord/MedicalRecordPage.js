@@ -36,6 +36,7 @@ class MedicalRecordPage extends BaseListPage {
     );
     this.state = {
       objects: [],
+      selected: [],
     };
   }
 
@@ -135,55 +136,73 @@ class MedicalRecordPage extends BaseListPage {
   }
 
   render() {
-    const { objects } = this.state;
+    const { objects, selected, progress } = this.state;
     const schema = this.getSchema("patient");
-    console.log("objects:", schema);
+    console.log("objects:", objects);
     return (
       <>
         <NavBar className="shadow-sm" />
 
         <div className="overflow-auto">
-          <div className="p-3 p-lg-4">
-            <h1 className="fw-bold mt-3 text-capitalize">Customer List</h1>
-            <Search
-              className="mt-3"
-              onSubmit={this.searchSubmit.bind(this)}
-              fields={schema.fields}
-            />
-            <Table
-              fields={schema.fields}
-              groups={schema.groups}
-              objects={objects}
-              className="mt-3"
-              selectable
-              collapsable
-              // onCollapse={this.onCollapse.bind(this)}
-              // onClickItem={this.onClickItem.bind(this)}
-              excludeFields={Object.keys(schema.fields).filter(
-                (key) =>
-                  key !== "firstName" &&
-                  key !== "middleName" &&
-                  key !== "lastName"
-              )}
-              actions={[
-                {
-                  label: "EDIT",
-                  onClick: this.onClickItem.bind(this),
-                  className: "btn btn-primary ms-2",
-                },
-                {
-                  label: "CONSULTATION HISTORY",
-                  onClick: this.onClickHistory.bind(this),
-                  className: "btn btn-info ms-2",
-                },
-                {
-                  label: "PRINT CERTIFICATE",
-                  // onClick: this.onClickPrint.bind(this),
-                  className: "btn btn-danger ms-2",
-                },
-              ]}
-            />
-          </div>
+          <InfiniteScroll
+            className="h-100"
+            loadMore={this.loadMore.bind(this)}
+            // hasMore={!progress && count > objects.length}
+          >
+            <div className="p-3 p-lg-4">
+              <h1 className="fw-bold mt-3 text-capitalize">Customer List</h1>
+              <Search
+                className="mt-3"
+                schemas={this.getSchemas()}
+                onSubmit={this.searchSubmit.bind(this)}
+                // fields={schema.fields}
+                fields={Object.keys(schema.fields).reduce((acc, key) => {
+                  const options = schema.fields[key];
+                  if (options.filter === false) {
+                    return acc;
+                  }
+                  acc[key] = options;
+                  return acc;
+                }, {})}
+              />
+              <Table
+                fields={schema.fields}
+                // groups={schema.groups}
+                objects={objects}
+                className="mt-3"
+                selectable
+                collapsable
+                // selected={selected}
+                // onSelect={this.onSelect.bind(this)}
+                // onSelectAll={this.onSelectAll.bind(this)}
+                // onCollapse={this.onCollapse.bind(this)}
+                // onClickItem={this.onClickItem.bind(this)}
+                excludeFields={Object.keys(schema.fields).filter(
+                  (key) =>
+                    key !== "firstName" &&
+                    key !== "middleName" &&
+                    key !== "lastName"
+                )}
+                actions={[
+                  {
+                    label: "EDIT",
+                    onClick: this.onClickItem.bind(this),
+                    className: "btn btn-primary ms-2",
+                  },
+                  {
+                    label: "CONSULTATION HISTORY",
+                    onClick: this.onClickHistory.bind(this),
+                    className: "btn btn-info ms-2",
+                  },
+                  {
+                    label: "PRINT CERTIFICATE",
+                    // onClick: this.onClickPrint.bind(this),
+                    className: "btn btn-danger ms-2",
+                  },
+                ]}
+              />
+            </div>
+          </InfiniteScroll>
         </div>
 
         <div className="position-fixed bottom-0 end-0 m-4">

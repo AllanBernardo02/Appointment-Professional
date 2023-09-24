@@ -28,10 +28,10 @@ class ChatUserPresenter {
     this.progress = true;
     return this.findObjectUseCase
       .execute("users", query)
-      .then(({ count, objects }) => {
+      .then((objects) => {
         this.documents = this.documents.concat(objects);
         console.log("Users p", this.documents);
-        this.view.setCount(count);
+        // this.view.setCount(count);
         this.view.setUsers(this.documents);
         this.view.hideProgress();
         this.progress = false;

@@ -77,10 +77,10 @@ class ChatPresenter {
     this.view.showProgress();
     return this.findUseCase
       .execute("chats", query)
-      .then(({ count, objects }) => {
+      .then((objects) => {
         this.documents = this.documents.concat(objects);
 
-        this.view.setCount(count);
+        // this.view.setCount(count);
         this.view.setChats(this.documents);
         this.view.hideProgress();
       })

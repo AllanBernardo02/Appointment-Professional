@@ -105,12 +105,12 @@ class ChatPage extends BaseListPage {
                   loadMore={this.loadMore.bind(this)}
                 >
                   {chats.map((chat) => {
-                    const receiver = chat.participants.find(
+                    const receiver = chat?.participants.find(
                       (u) => u.id !== sender.id
                     );
                     return (
                       <div
-                        key={chat.id}
+                        key={chat?.id}
                         className="cursor-pointer mb-3"
                         onClick={this.onClickChat.bind(this, chat)}
                       >
@@ -133,30 +133,30 @@ class ChatPage extends BaseListPage {
                               <h6 className="mb-0">
                                 {receiver?.name || receiver?.username}
                               </h6>
-                              <span className="text-muted fs-xs ms-2">
-                                {getDateAndTimeFromISO(chat.updatedAt)}
-                              </span>
+                              {/* <span className="text-muted fs-xs ms-2">
+                                {getDateAndTimeFromISO(chat?.updatedAt)}
+                              </span> */}
                             </div>
                             <div className="d-flex justify-content-between">
                               <div className="me-2 text-truncate overflow-hidden">
-                                {chat.seen === false &&
+                                {chat?.seen === false &&
                                 chat?.initiator?.id !== sender?.id ? (
                                   <b>
                                     <p className="text-truncate fs-sm ">
-                                      {chat.content &&
+                                      {chat?.content &&
                                         ellipsize(chat.content, 15)}
                                     </p>
                                   </b>
                                 ) : (
                                   <p className="text-truncate fs-sm ">
-                                    {chat.content &&
+                                    {chat?.content &&
                                       ellipsize(chat.content, 15)}
                                   </p>
                                 )}
                               </div>
                               <i
                                 className={
-                                  chat.seen === false &&
+                                  chat?.seen === false &&
                                   chat?.initiator?.id !== sender?.id
                                     ? "bi bi-circle-fill"
                                     : ""

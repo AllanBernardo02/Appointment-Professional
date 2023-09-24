@@ -4,10 +4,16 @@ import BasePage from "../../../../base/BasePage";
 import CreateSchedulePresenter from "./CreateSchedulePresenter";
 import NavBar from "../../../../components/navbar";
 import Search from "../../../../components/Search";
-import FormFactory from "../../../../components/FormFactory";
+// import FormFactory from "../../../../components/FormFactory";
 import BaseFormPage from "../../../../base/BaseFormPage";
-import { Checkbox } from "nq-component";
-import { getObjectUseCase, upsertUseCase } from "../../../../usecases/object";
+import { Checkbox, FormFactory } from "nq-component";
+import {
+  findObjectUseCase,
+  getObjectUseCase,
+  saveObjectUseCase,
+  upsertUseCase,
+} from "../../../../usecases/object";
+import { saveFileUseCase, saveImageUseCase } from "../../../../usecases/file";
 
 class CreateSchedulePage extends BaseFormPage {
   constructor(props) {
@@ -28,6 +34,7 @@ class CreateSchedulePage extends BaseFormPage {
   render() {
     const schema = this.getSchema(this.getCollectionName());
     const object = this.state.object;
+    console.log("Schema", schema);
     return (
       <>
         <NavBar />
@@ -47,10 +54,21 @@ class CreateSchedulePage extends BaseFormPage {
                     <hr className="dropdown-divider" />
                     <h5>Set Date</h5>
                   </div>
-                  <FormFactory
+                  {/* <FormFactory
                     schema={schema}
                     object={object}
                     onChange={this.onChange.bind(this)}
+                  /> */}
+                  <FormFactory
+                    className="col-md-4"
+                    schema={schema}
+                    schemas={this.getSchemas()}
+                    object={object}
+                    onChange={this.onChange.bind(this)}
+                    findObject={findObjectUseCase()}
+                    saveObject={saveObjectUseCase()}
+                    saveImage={saveImageUseCase()}
+                    saveFile={saveFileUseCase()}
                   />
                 </div>
 

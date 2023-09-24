@@ -38,7 +38,7 @@ class ViewPage extends BaseListPage {
 
     if (selectedDate) {
       const filteredObjects = objects.filter((o) => {
-        const date = new Date(o.date);
+        const date = new Date(o?.date);
         return date.toLocaleDateString().includes(selectedDate);
       });
 
@@ -67,7 +67,7 @@ class ViewPage extends BaseListPage {
     console.log("hihih", formattedDate);
 
     const hasTimeSlots = objects.some((object) => {
-      const formatted = new Date(object.date).toLocaleDateString();
+      const formatted = new Date(object?.date).toLocaleDateString();
       return formattedDate.includes(formatted);
     });
     console.log("hehehe", hasTimeSlots);

@@ -2,9 +2,16 @@ import React, { Component } from "react";
 import withRouter from "../../../../withRouter";
 import BasePage from "../../../../base/BasePage";
 import ConsultationFormPresenter from "./ConsultationFormPresenter";
-import { getObjectUseCase, upsertUseCase } from "../../../../usecases/object";
-import FormFactory from "../../../../components/FormFactory";
+import {
+  findObjectUseCase,
+  getObjectUseCase,
+  saveObjectUseCase,
+  upsertUseCase,
+} from "../../../../usecases/object";
+// import FormFactory from "../../../../components/FormFactory";
 import NavBar from "../../../../components/navbar";
+import { FormFactory } from "nq-component";
+import { saveFileUseCase, saveImageUseCase } from "../../../../usecases/file";
 
 class ConsultationFormPage extends BasePage {
   constructor(props) {
@@ -60,7 +67,7 @@ class ConsultationFormPage extends BasePage {
     this.presenter.submit();
   }
   render() {
-    const schema = this.getSchema("patientConsultation");
+    const schema = this.getSchema(this.getCollectionName());
     const object = this.state.object;
     return (
       <>
@@ -77,10 +84,21 @@ class ConsultationFormPage extends BasePage {
                   <hr className="dropdown-divider" />
                 </div>
 
-                <FormFactory
+                {/* <FormFactory
                   schema={schema}
                   object={object}
                   onChange={this.onChange.bind(this)}
+                /> */}
+                <FormFactory
+                  className="col-md-4"
+                  schema={schema}
+                  schemas={this.getSchemas()}
+                  object={object}
+                  onChange={this.onChange.bind(this)}
+                  findObject={findObjectUseCase()}
+                  saveObject={saveObjectUseCase()}
+                  saveImage={saveImageUseCase()}
+                  saveFile={saveFileUseCase()}
                 />
               </div>
 

@@ -161,13 +161,13 @@ class ConsultationPage extends BasePage {
         </div>
         <div className="position-fixed text-end bottom-0 end-0 m-4">
           <Button
-            className="shadow-sm bg-primary m-2"
+            className="shadow-sm bg-primary btn btn-primary m-2"
             onClick={this.onClickAdd.bind(this, objects)}
           >
             ADD CONSULTATION
           </Button>
           <Button
-            className="shadow-sm bg-primary m-2"
+            className="shadow-sm bg-primary btn btn-primary m-2"
             onClick={this.onClickBack.bind(this)}
           >
             GO BACK

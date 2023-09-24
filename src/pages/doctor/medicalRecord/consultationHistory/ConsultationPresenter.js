@@ -76,12 +76,12 @@ class ConsultationPresenter {
     };
     this.view.showProgress();
     try {
-      const { count, objects } = await this.findObjectUseCase.execute(
+      const objects = await this.findObjectUseCase.execute(
         "patientConsultation",
         query
       );
       // this.objects = this.objects.concat(objects);
-      this.view.setCounts(count);
+      // this.view.setCounts(count);
       console.log("Bkt doble", objects);
       this.view.setConsults(objects);
     } catch (error) {

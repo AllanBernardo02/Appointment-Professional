@@ -1,9 +1,11 @@
-class ConsultationFormPresenter {
-  constructor(view, getObjectUseCase, upsertUseCase) {
-    this.view = view;
-    this.getObjectUseCase = getObjectUseCase;
-    this.upsertUseCase = upsertUseCase;
-  }
+import BaseFormPresenter from "../../../../base/BaseFormPresenter";
+
+class ConsultationFormPresenter extends BaseFormPresenter {
+  // constructor(view, getObjectUseCase, upsertUseCase) {
+  //   this.view = view;
+  //   this.getObjectUseCase = getObjectUseCase;
+  //   this.upsertUseCase = upsertUseCase;
+  // }
 
   componentDidMount() {
     this.init();
@@ -34,9 +36,9 @@ class ConsultationFormPresenter {
   //     }
   //   }
 
-  onChange(field, data) {
-    this.change[field] = data;
-  }
+  // onChange(field, data) {
+  //   this.change[field] = data;
+  // }
 
   async save() {
     const collection = this.view.getCollectionName();

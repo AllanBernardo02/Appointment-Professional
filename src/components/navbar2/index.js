@@ -51,9 +51,13 @@ function NavBar2({ user }) {
 
         <button
           type="button"
-          className="btn btn-sm btn-link fs-4 ps-0 text-dark"
+          className="btn btn-sm btn-link fs-4 ps-0 text-dark position-relative"
         >
-          <i className="bi bi-bell"></i>
+          <i className="bi bi-bell">
+            <span class="position-absolute top-0  translate-middle badge rounded-pill text-danger mt-2  p-0">
+              10
+            </span>
+          </i>
         </button>
       </div>
     </nav>

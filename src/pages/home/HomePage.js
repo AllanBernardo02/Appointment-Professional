@@ -22,9 +22,21 @@ class HomePage extends BasePage {
   constructor(props) {
     super(props);
   }
-  records = () => {
-    this.navigateTo("/medical-record");
+
+  navigateToRoute = (route) => {
+    switch (route) {
+      case "medical-record":
+        this.navigateTo("/medical-record");
+        break;
+      case "account":
+        this.navigateTo("/account");
+        break;
+
+      default:
+        break;
+    }
   };
+
   render() {
     const user = this.getCurrentUser();
     console.log(user);
@@ -62,7 +74,10 @@ class HomePage extends BasePage {
                 <p className="fw-bold mb-1">{user.firstName}</p> */}
               {/* <p className="mb-0">{greeting}</p> */}
             </div>
-            <div className="mt-4">
+            <div
+              className="mt-4"
+              onClick={() => this.navigateToRoute("account")}
+            >
               {/* <button
                   // onClick={onClickNavigate}
                   type="button"
@@ -98,7 +113,7 @@ class HomePage extends BasePage {
             <div className="row text-center">
               <div
                 className="col d-flex flex-column align-items-center"
-                onClick={this.records.bind(this)}
+                onClick={() => this.navigateToRoute("medical-record")}
               >
                 <div
                   style={backgroundstyle}

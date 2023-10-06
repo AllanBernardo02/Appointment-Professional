@@ -121,6 +121,7 @@ class MainPage extends BasePage {
 
   render() {
     const user = this.getCurrentUser();
+    console.log(user);
     const schemas = this.getSchemas();
     const roles = this.getCurrentRoles();
     if (user === undefined || schemas === undefined) {

@@ -16,6 +16,7 @@ class ChatUserPage extends BaseListPage {
       users: [],
       count: 0,
     };
+    // this.onChangeSearch = this.onChangeSearch.bind(this);
   }
 
   getCollectionName() {
@@ -49,6 +50,7 @@ class ChatUserPage extends BaseListPage {
     const progress = this.state.progress;
     const sender = this.getCurrentUser();
     console.log("users", users);
+    console.log(sender, "sender")
     return (
       <>
         <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
@@ -82,7 +84,6 @@ class ChatUserPage extends BaseListPage {
                     <i className="bi bi-search text-white"></i>
                   </Button>
                 </div>
-
                 <Scroll
                   hasMore={users.length < count}
                   loadMore={this.loadMore.bind(this)}

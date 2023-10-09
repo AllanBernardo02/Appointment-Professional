@@ -15,7 +15,8 @@ class ChatMessagePresenter {
     this.updateObjectUseCase = updateObjectUseCase;
     this.saveFileUseCase = saveFileUseCase;
     this.subscriber = PubSub.createSubscriber();
-    this.chat = null;
+    this.chat = {};
+    this.change = {};
   }
 
   componentDidMount() {
@@ -88,7 +89,7 @@ class ChatMessagePresenter {
     if (this.chat) {
       const query = {
         where: { chat: { id: this.chat.id } },
-        include: ["sender"],
+        include: ["all"],
       };
       return this.findObjectUseCase
         .execute("messages", query)
@@ -167,7 +168,6 @@ class ChatMessagePresenter {
         this.view.showError(error);
       });
   }
-
   onClickAttachment(file) {
     this.saveFileUseCase.execute(file).then((result) => {
       const message = {};
@@ -195,6 +195,10 @@ class ChatMessagePresenter {
     this.view.showSuccess("ticket successfully closed").then(() => {
       this.view.navigateTo("/support");
     });
+  }
+
+  onChange(value, field) {
+    this.change[field] = value
   }
 }
 

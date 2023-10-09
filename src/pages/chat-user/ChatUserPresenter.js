@@ -26,7 +26,7 @@ class ChatUserPresenter {
     };
     this.view.showProgress();
     this.progress = true;
-    return this.findObjectUseCase
+    this.findObjectUseCase
       .execute("users", query)
       .then((objects) => {
         this.documents = this.documents.concat(objects);
@@ -66,11 +66,14 @@ class ChatUserPresenter {
   }
 
   onSubmitSearch(word) {
-    const or = [];
-    or.push({ firstName: { $regex: word, $options: "i" } });
-    or.push({ username: { $regex: word, $options: "i" } });
+    // const or = [];
+    // or.push({ firstName: { $regex: word, $options: "i" } });
+    // or.push({ username: { $regex: word, $options: "i" } });
     this.where = {
-      $or: or,
+      $or: [
+        { firstName: { $regex: word, $options: "i" } },
+        { username: { $regex: word, $options: "i" } },
+      ],
     };
     this.documents = [];
     this.current = 1;

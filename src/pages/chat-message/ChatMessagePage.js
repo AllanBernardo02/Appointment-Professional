@@ -8,7 +8,7 @@ import {
   updateObjectUseCase,
 } from "../../usecases/object";
 import { saveFileUseCase } from "../../usecases/file";
-import { InputString, Progress } from "nq-component";
+import { InputFactory, InputString, Progress } from "nq-component";
 import dateFormat from "../../dateFormat";
 import Content from "./Content";
 import browseFile from "../../browseFile";
@@ -28,7 +28,7 @@ class ChatMessagePage extends BasePage {
     this.state = {
       messages: [],
       message: {},
-      chat: null,
+      chat: {},
       progress: false,
     };
     this.overflow = createRef();
@@ -91,7 +91,7 @@ class ChatMessagePage extends BasePage {
 
   scrollDown() {
     const element = this.overflow.current;
-    element.scroll({ top: element.scrollHeight });
+    element.scroll({ top: element.scrollHeight, behavior: "smooth" });
   }
 
   onClickBack() {
@@ -100,6 +100,10 @@ class ChatMessagePage extends BasePage {
 
   onClickClose() {
     this.presenter.closeClick();
+  }
+
+  onChange(value, field) {
+    this.presenter.onChange(value, field)
   }
 
   render() {
@@ -112,9 +116,9 @@ class ChatMessagePage extends BasePage {
     const messages = this.state.messages;
     const message = this.state.message;
     const showClose = chat.type === "SUPPORT" && chat.user.id !== sender.id;
-    console.log(chat);
-    console.log("message", messages);
-    console.log(messages);
+    // console.log(chat);
+    // console.log("message", messages);
+    console.log(messages, "message");
     return (
       <>
         <>
@@ -180,62 +184,6 @@ class ChatMessagePage extends BasePage {
             <div className="container">
               <div className="py-3 px-lg-5 py-lg-4">
                 <div className="d-flex flex-column justify-content-end">
-                  {progress && (
-                    <Progress className="fs-sm">Loading ...</Progress>
-                  )}
-                  {chat.type === "SUPPORT" && (
-                    <div className="mb-3 bg-white p-3 px-lg-5 py-lg-4">
-                      <div className="d-flex justify-content-start">
-                        <h6>
-                          <strong>
-                            <i className="bi bi-exclamation-triangle"></i>{" "}
-                            Ticket ID: {chat.id}
-                          </strong>
-                        </h6>
-                      </div>
-                      <div>
-                        <span className="ms-2 fw-light">Reason: </span>
-                        <span className="fs-sm text-nowrap">
-                          {chat.issue.type}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="ms-2 fw-light">Department: </span>
-                        <span className="fs-sm text-nowrap">
-                          {chat.department.name}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="ms-2 fw-light">Reported on: </span>
-                        <span className="fs-sm text-nowrap">
-                          {dateFormat(chat.createdAt)}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="ms-2 fw-light">Severity: </span>
-                        <span className="fs-sm text-nowrap">
-                          {chat.severity == "Low" ? (
-                            <span className="badge bg-secondary">
-                              {chat.severity}
-                            </span>
-                          ) : chat.severity == "Medium" ? (
-                            <span className="badge bg-success">
-                              {chat.severity}
-                            </span>
-                          ) : (
-                            <span className="badge bg-danger">
-                              {chat.severity}
-                            </span>
-                          )}
-                        </span>
-                      </div>
-
-                      <div>
-                        <span className="ms-2 fw-light">Status: </span>
-                        <span className="fs-sm text-nowrap">{chat.status}</span>
-                      </div>
-                    </div>
-                  )}
                   {messages.map((message) => {
                     return (
                       <Content
@@ -249,6 +197,15 @@ class ChatMessagePage extends BasePage {
               </div>
             </div>
           </div>
+          {/* {messages.map((message) => {
+                    return (
+                      <Content
+                      key={message.id}
+                      user={sender}
+                      message={message}
+                      />
+                    );
+                  })} */}
           <div className="mt-auto p-2 bg-light">
             <form
               className="row align-items-center gx-2"
@@ -264,13 +221,14 @@ class ChatMessagePage extends BasePage {
                 </button>
               </div>
               <div className="col">
-                <InputString
+                <InputFactory
                   required
                   field="content"
                   object={message}
-                  type="text"
+                  type="String"
                   className="form-control form-control-lg"
                   placeholder="Enter your Message here"
+                  onChange={(value) => this.onChange(value, "content")}
                 />
               </div>
               <div className="col-auto">

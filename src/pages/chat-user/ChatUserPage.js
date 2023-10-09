@@ -50,7 +50,7 @@ class ChatUserPage extends BaseListPage {
     const progress = this.state.progress;
     const sender = this.getCurrentUser();
     console.log("users", users);
-    console.log(sender, "sender")
+    console.log(sender, "sender");
     return (
       <>
         <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
@@ -62,7 +62,7 @@ class ChatUserPage extends BaseListPage {
             >
               <i className="bi bi-arrow-left-short"></i>
             </button>
-            <a href="# " className="navbar-brand me-auto">
+            <a className="navbar-brand me-auto">
               New Message
             </a>
           </div>
@@ -113,10 +113,10 @@ class ChatUserPage extends BaseListPage {
                       </div>
                     );
                   })}
-                  {progress && (
+                  {/* {progress && (
                     <Progress className="fs-sm">Loading ...</Progress>
                   )}
-                  {!progress && count === 0 && <h3>No Data Found</h3>}
+                  {!progress && count === 0 && <h3>No Data Found</h3>} */}
                 </Scroll>
               </div>
             </div>

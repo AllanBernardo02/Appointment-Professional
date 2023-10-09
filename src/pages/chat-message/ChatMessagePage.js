@@ -28,7 +28,7 @@ class ChatMessagePage extends BasePage {
     this.state = {
       messages: [],
       message: {},
-      chat: {},
+      chat: null,
       progress: false,
     };
     this.overflow = createRef();
@@ -67,6 +67,7 @@ class ChatMessagePage extends BasePage {
 
   getChat() {
     // get chat state or get chat from props navigation
+    console.log("chat", this.state.chat);
     return this.state.chat || this.getArgument();
   }
 
@@ -103,13 +104,13 @@ class ChatMessagePage extends BasePage {
   }
 
   onChange(value, field) {
-    this.presenter.onChange(value, field)
+    this.presenter.onChange(value, field);
   }
 
   render() {
     const chat = this.state.chat;
     const progress = this.state.progress;
-    if (!chat) return null;
+    if (!chat) return <div>Loading chat...</div>;
     const sender = this.getCurrentUser();
     const receiver =
       chat.participants.find((u) => u.id !== sender.id) || sender;
@@ -119,6 +120,7 @@ class ChatMessagePage extends BasePage {
     // console.log(chat);
     // console.log("message", messages);
     console.log(messages, "message");
+    console.log("sender", sender);
     return (
       <>
         <>

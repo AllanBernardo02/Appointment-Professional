@@ -8,13 +8,15 @@ import {
   updateObjectUseCase,
 } from "../../usecases/object";
 import NavBar from "../../components/navbar";
-import { InfiniteScroll as Scroll, Progress } from "nq-component";
+import { InfiniteScroll as Scroll, Progress, Button } from "nq-component";
 import BaseListPage from "../../base/BaseListPage";
 import ellipsize from "../../ellipsize";
 import NotFoundPage from "../notfound";
 import Queue from "nq";
 import { Avatar } from "antd";
 import getDateAndTimeFromISO from "../../getDateAndTimeFromISO";
+import { Link } from "react-router-dom";
+import Card from "../../components/Card";
 
 class ChatPage extends BaseListPage {
   constructor(props) {
@@ -73,6 +75,10 @@ class ChatPage extends BaseListPage {
     this.setState({ messages });
   }
 
+  onCreateNewMessage() {
+    this.presenter.onCreateNewMessage();
+  }
+
   render() {
     const count = this.state.count;
     const progress = this.state.progress;
@@ -100,6 +106,9 @@ class ChatPage extends BaseListPage {
                     <i className="bi bi-search text-white"></i>
                   </button>
                 </div>
+                  <div className="mb-4 fs-4 text-center fw-bold">
+                    <span>Recent Chats</span>
+                  </div>
                 <Scroll
                   hasMore={chats.length < count}
                   loadMore={this.loadMore.bind(this)}
@@ -108,6 +117,10 @@ class ChatPage extends BaseListPage {
                     const receiver = chat?.participants.find(
                       (u) => u.id !== sender.id
                     );
+                    const participants = chat?.participants.filter(
+                      (participant) => participant.id !== sender.id
+                    );
+                    console.log("this is the participants", participants);
                     return (
                       <div
                         key={chat?.id}
@@ -116,23 +129,27 @@ class ChatPage extends BaseListPage {
                       >
                         <div className="d-flex align-items-center">
                           <div>
-                            <img
-                              className="rounded-circle me-2"
-                              src={
-                                (receiver?.profile &&
-                                  Queue.File.getFile(receiver.profile)) ||
-                                Avatar
-                              }
-                              width="40"
-                              height="40"
-                              alt=""
-                            />
+                            {participants.map((participant) => (
+                              <img
+                                className="rounded-circle me-2"
+                                src={
+                                  (participant?.profile &&
+                                    Queue.File.getFile(participant.profile)) ||
+                                  Avatar
+                                }
+                                width="40"
+                                height="40"
+                                alt=""
+                              />
+                            ))}
                           </div>
                           <div className="w-100">
                             <div className="d-flex justify-content-between">
-                              <h6 className="mb-0">
-                                {receiver?.name || receiver?.username}
-                              </h6>
+                              {participants.map((participant) => (
+                                <span key={participant.id}>
+                                  {participant.name || participant.username}
+                                </span>
+                              ))}
                               {/* <span className="text-muted fs-xs ms-2">
                                 {getDateAndTimeFromISO(chat?.updatedAt)}
                               </span> */}
@@ -176,6 +193,19 @@ class ChatPage extends BaseListPage {
                     <NotFoundPage message="No messages found" />
                   )}
                 </Scroll>
+                <div className="position-fixed bottom-0 end-0 m-4">
+                  <Button
+                    className="btn btn-primary shadow-sm bg-primary"
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "25px",
+                    }}
+                    onClick={this.onCreateNewMessage.bind(this)}
+                  >
+                    <i className="bi bi-pencil-square fs-5" />
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

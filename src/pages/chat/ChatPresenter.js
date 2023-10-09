@@ -32,9 +32,7 @@ class ChatPresenter {
       if (message.chat.participants.find((u) => u.id === sender.id)) {
         if (!this.documents.find((d) => d.id === message.chat.id)) {
           console.log("if...");
-
           this.documents.push(message.chat);
-
           this.view.setChats(this.documents);
         } else if (this.documents.find((d) => d.id === message.chat.id)) {
           console.log("else if....", this.documents);
@@ -64,7 +62,7 @@ class ChatPresenter {
   }
 
   getData() {
-    const user = this.view.getCurrentUser();
+    // const user = this.view.getCurrentUser();
     const skip = (this.current - 1) * this.limit;
     const query = {
       count: true,
@@ -72,15 +70,16 @@ class ChatPresenter {
       skip,
       include: ["all"],
       sort: { updatedAt: -1 },
-      where: { participants: [{ id: user.id }] },
+      // where: { participants: [{ id: user.id }] },
     };
+    console.log("this is the query", query);
     this.view.showProgress();
     return this.findUseCase
       .execute("chats", query)
       .then((objects) => {
         this.documents = this.documents.concat(objects);
-
         // this.view.setCount(count);
+        console.log("chatsssss", this.documents);
         this.view.setChats(this.documents);
         this.view.hideProgress();
       })
@@ -149,6 +148,10 @@ class ChatPresenter {
       this.current++;
       this.getData();
     }
+  }
+
+  onCreateNewMessage() {
+    this.view.navigateTo("/chat/user");
   }
 }
 

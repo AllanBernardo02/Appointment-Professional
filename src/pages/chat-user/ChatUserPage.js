@@ -3,7 +3,12 @@ import withRouter from "../../withRouter";
 import BaseListPage from "../../base/BaseListPage";
 import ChatUserPresenter from "./ChatUserPresenter";
 import { findObjectUseCase } from "../../usecases/object";
-import { Button, Progress, InfiniteScroll as Scroll } from "nq-component";
+import {
+  Button,
+  InputFactory,
+  Progress,
+  InfiniteScroll as Scroll,
+} from "nq-component";
 import Queue from "nq";
 import Avatar from "../../assets/img/avatar.png";
 import Search from "../../components/Search";
@@ -62,9 +67,7 @@ class ChatUserPage extends BaseListPage {
             >
               <i className="bi bi-arrow-left-short"></i>
             </button>
-            <a className="navbar-brand me-auto">
-              New Message
-            </a>
+            <a className="navbar-brand me-auto">New Message</a>
           </div>
         </nav>
 
@@ -72,7 +75,10 @@ class ChatUserPage extends BaseListPage {
           <div className="py-3 px-lg-5 py-lg-4">
             <div className="shadow-sm rounded bg-white">
               <div className="p-3 px-lg-5 py-lg-4">
-                <div className="input-group mb-3">
+                <div className="input-group mb-3 align-items-center">
+                  <div className="fs-5 me-3">
+                    <span>To :</span>
+                  </div>
                   <Search
                     onChange={this.onChangeSearch.bind(this)}
                     name="search"
@@ -80,15 +86,12 @@ class ChatUserPage extends BaseListPage {
                     className="form-control"
                     placeholder="Search User.."
                   />
-                  <Button className="btn btn-primary">
-                    <i className="bi bi-search text-white"></i>
-                  </Button>
                 </div>
                 <Scroll
                   hasMore={users.length < count}
                   loadMore={this.loadMore.bind(this)}
                 >
-                  {users.map((user) => {
+                  {/* {users.map((user) => {
                     if (user.id === sender.id) return null;
                     return (
                       <div
@@ -112,11 +115,17 @@ class ChatUserPage extends BaseListPage {
                         </div>
                       </div>
                     );
-                  })}
+                  })} */}
                   {/* {progress && (
                     <Progress className="fs-sm">Loading ...</Progress>
                   )}
                   {!progress && count === 0 && <h3>No Data Found</h3>} */}
+                  <InputFactory type="Text" field="content" />
+                  <div className="d-flex justify-content-end">
+                    <Button className="btn btn-primary mt-3" type="submit">
+                      Send <i className="bi bi-send"></i>
+                    </Button>
+                  </div>
                 </Scroll>
               </div>
             </div>

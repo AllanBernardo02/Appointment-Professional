@@ -13,6 +13,7 @@ import BaseListPage from "../../base/BaseListPage";
 import ellipsize from "../../ellipsize";
 import NotFoundPage from "../notfound";
 import Queue from "nq";
+import profile from "../../assets/img/profile_icon.jpg";
 import { Avatar } from "antd";
 import getDateAndTimeFromISO from "../../getDateAndTimeFromISO";
 import { Link } from "react-router-dom";
@@ -106,9 +107,9 @@ class ChatPage extends BaseListPage {
                     <i className="bi bi-search text-white"></i>
                   </button>
                 </div>
-                  <div className="mb-4 fs-4 text-center fw-bold">
-                    <span>Recent Chats</span>
-                  </div>
+                <div className="mb-4 fs-4 text-center fw-bold">
+                  <span>Recent Chats</span>
+                </div>
                 <Scroll
                   hasMore={chats.length < count}
                   loadMore={this.loadMore.bind(this)}
@@ -135,7 +136,7 @@ class ChatPage extends BaseListPage {
                                 src={
                                   (participant?.profile &&
                                     Queue.File.getFile(participant.profile)) ||
-                                  Avatar
+                                  profile
                                 }
                                 width="40"
                                 height="40"

@@ -45,6 +45,7 @@ class ChatUserPresenter {
 
   onClickUser(receiver) {
     const sender = this.view.getCurrentUser();
+    console.log("the sender", sender);
     const participants = [sender, receiver];
     const query = {
       where: { participants: [{ id: sender.id }, { id: receiver.id }] },

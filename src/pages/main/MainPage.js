@@ -1,5 +1,6 @@
 import React from "react";
 import MainPagePresenter from "./MainPagePresenter";
+import Queue from "nq";
 import { Menu } from "nq-component";
 import { getAllSchemasUseCase } from "../../usecases/schema/usecases";
 import { getCurrentUserUseCase, signOutUseCase } from "../../usecases/user";
@@ -30,6 +31,7 @@ import ChatPage from "../chat/ChatPage";
 import ChatUserPage from "../chat-user/ChatUserPage";
 import ChatMessagePage from "../chat-message/ChatMessagePage";
 import HomePage from "../home/HomePage";
+import Photo from "../../assets/img/profile_icon.jpg";
 
 const scheduleMenus = [
   {
@@ -137,10 +139,13 @@ class MainPage extends BasePage {
                   <div className="text-center">
                     <img
                       className="img-fluid rounded-circle img-thumbnail p-0 m-2"
-                      src={getProfile(user)}
+                      src={
+                        (user.profile && Queue.File.getFile(user.profile)) ||
+                        Photo
+                      }
                       width="80"
                       height="80"
-                      alt="profile"
+                      alt="P"
                     />
                     <p className="text-white">{user.name || user.username}</p>
                   </div>

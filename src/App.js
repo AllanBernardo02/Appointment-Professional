@@ -9,7 +9,7 @@ import Queue from "nq";
 import Redirect from "./Redirect";
 import TestPage from "./pages/TestPage";
 
-Queue.setUrl("https://api.innque.com/v1");
+Queue.setUrl("https://api.beta.innque.com/v1");
 // Queue.setUrl("http://188.166.177.35:8888/v1");
 // Queue.setUrl('https://api.figarocoffeegroup.com/v1');
 // Queue.setUrl("https://api.test.figarocoffeegroup.com/v1");

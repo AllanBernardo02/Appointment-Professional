@@ -12,6 +12,8 @@ import {
 import Queue from "nq";
 import Avatar from "../../assets/img/avatar.png";
 import Search from "../../components/Search";
+import Profile from "../../assets/img/profile_icon.jpg";
+import SearchResult from "../../components/SearchResult";
 
 class ChatUserPage extends BaseListPage {
   constructor(props) {
@@ -21,7 +23,6 @@ class ChatUserPage extends BaseListPage {
       users: [],
       count: 0,
     };
-    // this.onChangeSearch = this.onChangeSearch.bind(this);
   }
 
   getCollectionName() {
@@ -75,7 +76,7 @@ class ChatUserPage extends BaseListPage {
           <div className="py-3 px-lg-5 py-lg-4">
             <div className="shadow-sm rounded bg-white">
               <div className="p-3 px-lg-5 py-lg-4">
-                <div className="input-group mb-3 align-items-center">
+                <div className="input-group mb-2 align-items-center">
                   <div className="fs-5 me-3">
                     <span>To :</span>
                   </div>
@@ -83,50 +84,46 @@ class ChatUserPage extends BaseListPage {
                     onChange={this.onChangeSearch.bind(this)}
                     name="search"
                     autoFocus
-                    className="form-control"
+                    className="form-control m-0"
                     placeholder="Search User.."
                   />
                 </div>
-                <Scroll
-                  hasMore={users.length < count}
-                  loadMore={this.loadMore.bind(this)}
-                >
-                  {/* {users.map((user) => {
-                    if (user.id === sender.id) return null;
-                    return (
-                      <div
-                        key={user.id}
-                        className="p-3 cursor-pointer"
-                        onClick={this.onClickUser.bind(this, user)}
-                      >
-                        <div className="d-flex align-items-center">
-                          <img
-                            className="rounded-circle me-2"
-                            src={
-                              (user.profile &&
-                                Queue.File.getFile(user.profile)) ||
-                              Avatar
-                            }
-                            width="40"
-                            height="40"
-                            alt=""
-                          />
-                          <h6 className="mb-0">{user.name || user.username}</h6>
-                        </div>
-                      </div>
-                    );
-                  })} */}
-                  {/* {progress && (
-                    <Progress className="fs-sm">Loading ...</Progress>
-                  )}
-                  {!progress && count === 0 && <h3>No Data Found</h3>} */}
-                  <InputFactory type="Text" field="content" />
-                  <div className="d-flex justify-content-end">
-                    <Button className="btn btn-primary mt-3" type="submit">
-                      Send <i className="bi bi-send"></i>
-                    </Button>
+                <div className="mb-4">
+                  <div
+                    className="ms-5 cursor-pointer"
+                    style={{
+                      backgroundColor: "white",
+                      boxShadow: "0px 0px 8px #ddd",
+                      borderRadius: "0 0 8px 8px",
+                      borderBottom: "1px solid gray",
+                      borderRight: "1px solid gray",
+                      borderLeft: "1px solid gray",
+                      maxHeight: "300px",
+                      overflowY: "auto",
+                    }}
+                  >
+                    {users.map((user) => {
+                      if (user.id === sender.id) return null;
+                      return (
+                        <SearchResult
+                          key={user.id}
+                          user={user}
+                          onClickUser={this.onClickUser.bind(this, user)}
+                        />
+                      );
+                    })}
+                    {/* {progress && (
+                      <Progress className="fs-sm">Loading ...</Progress>
+                    )}
+                    {!progress && count === 0 && <h3>No Data Found</h3>} */}
                   </div>
-                </Scroll>
+                </div>
+                <InputFactory type="Text" field="content" />
+                <div className="d-flex justify-content-end">
+                  <Button className="btn btn-primary mt-3" type="submit">
+                    Send <i className="bi bi-send"></i>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

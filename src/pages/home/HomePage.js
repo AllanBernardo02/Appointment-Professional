@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import Queue from "nq";
 import BasePage from "../../base/BasePage";
 import withRouter from "../../withRouter";
 import NavBar2 from "../../components/navbar2";
 import getProfile from "../../getProfile";
+import Photo from "../../assets/img/profile_icon.jpg";
 
 const textstyle = {
   color: "rgba(0, 86, 86, 1)",
@@ -57,7 +59,9 @@ class HomePage extends BasePage {
               <img
                 alt="profile"
                 className="img-fluid rounded-circle img-thumbnail me-2"
-                src={profile}
+                src={
+                  (user.profile && Queue.File.getFile(user.profile)) || Photo
+                }
                 width="70"
                 height="70"
               />

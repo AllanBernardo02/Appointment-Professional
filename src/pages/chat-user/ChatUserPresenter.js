@@ -12,7 +12,7 @@ class ChatUserPresenter {
   }
 
   componentDidMount() {
-    this.getData();
+    // this.getData();
   }
 
   getData() {

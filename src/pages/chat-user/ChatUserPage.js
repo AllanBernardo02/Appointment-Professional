@@ -22,6 +22,9 @@ class ChatUserPage extends BaseListPage {
     this.state = {
       users: [],
       count: 0,
+      message: [],
+      messages: [],
+      chat: null,
     };
   }
 
@@ -50,8 +53,29 @@ class ChatUserPage extends BaseListPage {
     return this.setState({ count });
   }
 
+  onChange(value, field) {
+    this.presenter.onChange(value, field);
+  }
+
+  setMessage(message) {
+    this.setState({ message });
+  }
+
+  onSubmitMessage(e) {
+    e.preventDefault();
+    this.presenter.onSubmitMessage();
+  }
+
+  onCreate(message) {
+    const messages = this.getMessages();
+    messages.push(message);
+    this.setMessages(messages);
+  }
+
   render() {
     const users = this.state.users;
+    const message = this.state.message;
+    const messages = this.state.messages;
     const count = this.state.count;
     const progress = this.state.progress;
     const sender = this.getCurrentUser();
@@ -76,7 +100,7 @@ class ChatUserPage extends BaseListPage {
           <div className="py-3 px-lg-5 py-lg-4">
             <div className="shadow-sm rounded bg-white">
               <div className="p-3 px-lg-5 py-lg-4">
-                <div className="input-group mb-2 align-items-center">
+                <div className="input-group align-items-center">
                   <div className="fs-5 me-3">
                     <span>To :</span>
                   </div>
@@ -113,17 +137,37 @@ class ChatUserPage extends BaseListPage {
                       );
                     })}
                     {/* {progress && (
-                      <Progress className="fs-sm">Loading ...</Progress>
+                      <Progress className="fs-sm">Loading...</Progress>
                     )}
                     {!progress && count === 0 && <h3>No Data Found</h3>} */}
                   </div>
                 </div>
-                <InputFactory type="Text" field="content" />
-                <div className="d-flex justify-content-end">
-                  <Button className="btn btn-primary mt-3" type="submit">
-                    Send <i className="bi bi-send"></i>
-                  </Button>
-                </div>
+                <form className="row align-items-center gx-1" onSubmit={this.onSubmitMessage.bind(this)}>
+                  <div className="col-auto">
+                    <button
+                      // onClick={this.onClickAttachment.bind(this)}
+                      type="button"
+                      className="btn btn-link"
+                    >
+                      <i className="bi bi-paperclip fs-5"></i>
+                    </button>
+                  </div>
+                  <div className="col">
+                    <InputFactory
+                      type="Text"
+                      field="content"
+                      object={message}
+                      placeholder="Enter your Message Here."
+                      className="form-control form-control-lg"
+                      onChange={(value) => this.onChange(value, "content")}
+                    />
+                  </div>
+                  <div className="d-flex justify-content-end">
+                    <Button className="btn btn-primary mt-3" type="submit">
+                      Send <i className="bi bi-send"></i>
+                    </Button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>

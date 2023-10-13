@@ -66,7 +66,6 @@ class ChatMessagePresenter {
         if (sender.id !== message.chat.initiator.id) {
           message.chat.seen = true;
         }
-
         this.updateObjectUseCase.execute("chats", message.chat).then((res) => {
           console.log("seen updated", res);
         });
@@ -114,7 +113,7 @@ class ChatMessagePresenter {
     this.view.setMessage({});
     this.saveMessage(message);
   }
-
+  
   saveMessage(message) {
     // update content of the chat
     if (message.chat.id) {

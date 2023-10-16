@@ -42,6 +42,7 @@ class BaseFormPresenter {
   async save() {
     const collection = this.view.getCollectionName();
     const object = this.view.getObject();
+    console.log(object, "The object motha fucker");
     if (object.id) {
       this.change.id = object.id;
     } else {
@@ -49,6 +50,8 @@ class BaseFormPresenter {
     }
     try {
       await this.upsertUseCase.execute(collection, this.change);
+      console.log(collection, "THE COLLECTION");
+      console.log(this.change, "THE ID");
     } catch (error) {
       throw error; // rethrow the error to be caught by the caller
     }

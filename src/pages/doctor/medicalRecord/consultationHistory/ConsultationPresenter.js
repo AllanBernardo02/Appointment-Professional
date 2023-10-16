@@ -1,5 +1,8 @@
-class ConsultationPresenter {
+import BaseListPresenter from "../../../../base/BaseListPresenter";
+
+class ConsultationPresenter extends BaseListPresenter {
   constructor(view, findObjectUseCase) {
+    super(view, findObjectUseCase);
     this.view = view;
     this.findObjectUseCase = findObjectUseCase;
   }
@@ -46,6 +49,8 @@ class ConsultationPresenter {
       this.objects = this.objects.concat(objects);
       // this.view.setCount(count);
       this.view.setObjects(this.objects);
+      console.log(objects, "THE OBJECTS!@#");
+      console.log(this.objects, "THE OBJECTS");
     } catch (error) {
       this.view.showError(error);
     } finally {
@@ -93,7 +98,6 @@ class ConsultationPresenter {
 
   onClickAdd(objects) {
     const collection = "patientConsultation";
-
     this.view.navigateTo("/consultation-form/" + objects[0].id);
   }
   // objects.forEach((object) => {
@@ -117,6 +121,13 @@ class ConsultationPresenter {
     //   return;
     // }
     this.view.navigateBack();
+  }
+
+  onClickItem(index, consult) {
+    const object = consult[index];
+    const collection = this.view.getCollectionName();
+    const params = this.view.getParams();
+    this.view.navigateTo(`/collection/${collection}/form/${object.id}`);
   }
 }
 

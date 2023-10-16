@@ -6,8 +6,9 @@ import { findObjectUseCase } from "../../../../usecases/object";
 import dateFormat from "../../../../dateFormat";
 import NavBar from "../../../../components/navbar";
 import { Button, Table } from "nq-component";
+import BaseListPage from "../../../../base/BaseListPage";
 
-class ConsultationPage extends BasePage {
+class ConsultationPage extends BaseListPage {
   constructor(props) {
     super(props);
     this.presenter = new ConsultationPresenter(this, findObjectUseCase());
@@ -21,9 +22,9 @@ class ConsultationPage extends BasePage {
     this.presenter.componentDidMount();
   }
 
-  // getCollectionName() {
-  //   return "patient";
-  // }
+  getCollectionName() {
+    return "patientConsultation";
+  }
 
   setObjects(objects) {
     this.setState({ objects });
@@ -67,13 +68,20 @@ class ConsultationPage extends BasePage {
     this.presenter.onClickAdd(object);
   }
 
+  // onClickEditItem(index, field) {
+  //   this.presenter.onclickEditItem(index, field);
+  // }
+
+  onClickItem(index, field) {
+    this.presenter.onClickItem(index, field);
+  }
+
   render() {
     const objects = this.state.objects;
     const consult = this.state.consults;
-
     const schema = this.getSchema("patientConsultation");
-
-    console.log("get naba?", consult);
+    console.log(consult, "the consult");
+    console.log("get naba?", objects);
     return (
       <>
         <NavBar />
@@ -84,25 +92,22 @@ class ConsultationPage extends BasePage {
             </h2>
             {objects.map((object, index) => (
               <div key={index} className="m-5">
-                <div className="d-flex">
-                  <div>
-                    {object && object["profile"] && (
+                <div className="d-flex flex-wrap">
+                  <div className="mr-3">
+                    {object && object["profile"] ? (
                       <img
                         style={{ width: "130px", height: "130px" }}
                         src={object["profile"]}
                         alt=""
                       />
+                    ) : (
+                      <i className="bi bi-person-circle fs-1"></i>
                     )}
-                    {!object ||
-                      (!object["profile"] && (
-                        <i className="bi bi-person-circle fs-1"></i>
-                      ))}
                   </div>
-                  <ul className="list-unstyled ms-1 text-truncate">
+                  <ul className="list-unstyled">
                     <li>
                       <span className="ms-1 fs-sm text-nowrap">
                         <h3 className="ms-2">
-                          {" "}
                           <b>
                             {object["firstName"]} {object["middleName"]}{" "}
                             {object["lastName"]}
@@ -110,14 +115,6 @@ class ConsultationPage extends BasePage {
                         </h3>
                       </span>
                     </li>
-                    {/* <li>
-                      <span className="ms-2 fs-sm text-nowrap">
-                        {this.calculateAge(object["birthDate"])} years old,{" "}
-                        {object["gender"] &&
-                          object["gender"].charAt(0).toUpperCase() +
-                            object["gender"].slice(1)}
-                      </span>
-                    </li> */}
                     <li>
                       <span className="ms-2 fs-sm text-nowrap">
                         {object["birthDate"]
@@ -132,7 +129,6 @@ class ConsultationPage extends BasePage {
                           }`}
                       </span>
                     </li>
-
                     <li>
                       <span className="ms-2 fs-sm text-nowrap">
                         {object["address"]}
@@ -147,9 +143,16 @@ class ConsultationPage extends BasePage {
               fields={schema.fields}
               objects={consult}
               className="mt-3"
-              //   onCollapse={this.onCollapse.bind(this)}
-              //   onClickItem={this.onClickItem.bind(this)}
-
+              collapsable
+              schemas={schema}
+              // onCollapse={this.onCollapse.bind(this)}
+              actions={[
+                {
+                  label: "EDIT",
+                  onClick: (index) => this.onClickItem(index, consult),
+                  className: "btn btn-primary ms-2",
+                },
+              ]}
               excludeFields={Object.keys(schema.fields).filter(
                 (key) =>
                   key !== "consultationName" &&

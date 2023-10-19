@@ -76,6 +76,8 @@ class ConsultationPage extends BaseListPage {
     this.presenter.onClickItem(index, field);
   }
 
+  
+
   render() {
     const objects = this.state.objects;
     const consult = this.state.consults;

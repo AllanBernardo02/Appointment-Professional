@@ -27,9 +27,9 @@ class ConsultationFormPage extends BasePage {
     };
   }
 
-  //   getObjectId() {
-  //     return this.props.params.id;
-  //   }
+  getObjectId() {
+    return this.props.params.id;
+  }
 
   getObject() {
     return this.state.object;
@@ -54,8 +54,8 @@ class ConsultationFormPage extends BasePage {
     return "patientConsultation";
   }
 
-  onChange(field, data) {
-    this.presenter.onChange(field, data);
+  onChange(data, field) {
+    this.presenter.onChange(data, field);
   }
 
   onClickBack() {
@@ -66,6 +66,11 @@ class ConsultationFormPage extends BasePage {
     e.preventDefault();
     this.presenter.submit();
   }
+
+  setObject(object) {
+    this.setState({ object: object });
+  }
+
   render() {
     const schema = this.getSchema(this.getCollectionName());
     const object = this.state.object;
@@ -83,20 +88,14 @@ class ConsultationFormPage extends BasePage {
                   <p className="small fw-bold mb-0 ms-1">Patient Details</p>
                   <hr className="dropdown-divider" />
                 </div>
-
-                {/* <FormFactory
-                  schema={schema}
-                  object={object}
-                  onChange={this.onChange.bind(this)}
-                /> */}
                 <FormFactory
                   className="col-md-4"
                   schema={schema}
-                  schemas={this.getSchemas()}
+                  // schemas={this.getSchemas()}
                   object={object}
                   onChange={this.onChange.bind(this)}
                   findObject={findObjectUseCase()}
-                  saveObject={saveObjectUseCase()}
+                  // saveObject={saveObjectUseCase()}
                   saveImage={saveImageUseCase()}
                   saveFile={saveFileUseCase()}
                 />

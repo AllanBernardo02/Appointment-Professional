@@ -98,7 +98,7 @@ class ConsultationPresenter extends BaseListPresenter {
 
   onClickAdd(objects) {
     const collection = "patientConsultation";
-    this.view.navigateTo("/consultation-form/" + objects[0].id);
+    this.view.navigateTo("/add-consultation/" + objects[0].id);
   }
   // objects.forEach((object) => {
   //   // const path = "/consultation-form/" + object.id;
@@ -125,9 +125,10 @@ class ConsultationPresenter extends BaseListPresenter {
 
   onClickItem(index, consult) {
     const object = consult[index];
-    const collection = this.view.getCollectionName();
+    // const collection = this.view.getCollectionName();
     const params = this.view.getParams();
-    this.view.navigateTo(`/collection/${collection}/form/${object.id}`);
+    console.log("params", params);
+    this.view.navigateTo(`/consultation-form/${params.id}/${object.id}`);
   }
 }
 

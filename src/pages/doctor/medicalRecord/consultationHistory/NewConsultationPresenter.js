@@ -1,6 +1,6 @@
-import BaseFormPresenter from "../../base/BaseFormPresenter";
+import BaseFormPresenter from "../../../../base/BaseFormPresenter";
 
-class CollectionFormPresenter extends BaseFormPresenter {
+class NewConsultationPresenter extends BaseFormPresenter {
 //   constructor(view, getObjectUseCase, upsertUseCase) {
 //     super(view, getObjectUseCase, upsertUseCase);
 //     this.view = view;
@@ -10,7 +10,7 @@ class CollectionFormPresenter extends BaseFormPresenter {
 
 //   componentDidMount() {
 //     this.init();
-//     this.view.getObject();
+//     this.getObject();
 //   }
 
 //   init() {
@@ -28,6 +28,7 @@ class CollectionFormPresenter extends BaseFormPresenter {
 //         const object = await this.getObjectUseCase.execute(collection, id, {
 //           params,
 //         });
+//         console.log("getter object", object);
 //         this.view.hideProgress();
 //         this.view.setObject(object);
 //       } catch (error) {
@@ -37,18 +38,22 @@ class CollectionFormPresenter extends BaseFormPresenter {
 //     }
 //   }
 
-//   onChange(field, data) {
-//     this.change[field] = data;
-//   }
-
 //   async save() {
 //     const collection = this.view.getCollectionName();
 //     const object = this.view.getObject();
 //     const user = this.view.getCurrentUser(); // new add
 //     const params = this.view.getParams();
 //     console.log("object get", object);
+//     console.log("params", params);
+//     console.log("change", this.change);
+//     // if (object.id) {
+//     //   this.change.id = object.id;
+//     // } else {
+//     //   this.change.acl = this.view.getAcl();
+//     // }
 //     if (object.id) {
 //       this.change.id = object.id;
+//       this.change.acl = this.view.getAcl();
 //       console.log("this changessss", this.change);
 //     } else {
 //       this.change.acl = this.view.getAcl();
@@ -72,7 +77,7 @@ class CollectionFormPresenter extends BaseFormPresenter {
 //       this.view.showProgress();
 //       await this.save();
 //       this.view.hideProgress();
-//       this.view.showSuccessSnackbar("Successfully saved!");
+//       this.view.showSucces("Successfull saved!");
 //       this.view.navigateBack();
 //     } catch (error) {
 //       this.view.hideProgress();
@@ -95,5 +100,4 @@ class CollectionFormPresenter extends BaseFormPresenter {
 //     this.view.navigateBack();
 //   }
 }
-
-export default CollectionFormPresenter;
+export default NewConsultationPresenter;

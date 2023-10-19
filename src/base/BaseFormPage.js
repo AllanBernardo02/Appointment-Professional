@@ -30,8 +30,8 @@ class BaseFormPage extends BasePage {
     this.setState({ object });
   }
 
-  onChange(value, field) {
-    this.presenter.onChange(value, field);
+  onChange(field, value) {
+    this.presenter.onChange(field, value);
   }
 
   getAcl() {

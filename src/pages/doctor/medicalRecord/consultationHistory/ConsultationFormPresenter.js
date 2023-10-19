@@ -1,15 +1,16 @@
 import BaseFormPresenter from "../../../../base/BaseFormPresenter";
 
 class ConsultationFormPresenter extends BaseFormPresenter {
-  // constructor(view, getObjectUseCase, upsertUseCase) {
-  //   this.view = view;
-  //   this.getObjectUseCase = getObjectUseCase;
-  //   this.upsertUseCase = upsertUseCase;
-  // }
+  constructor(view, getObjectUseCase, upsertUseCase) {
+    super(view, getObjectUseCase, upsertUseCase);
+    this.view = view;
+    this.getObjectUseCase = getObjectUseCase;
+    this.upsertUseCase = upsertUseCase;
+  }
 
   componentDidMount() {
     this.init();
-    this.view.getObject();
+    this.getObject();
   }
 
   init() {
@@ -17,28 +18,25 @@ class ConsultationFormPresenter extends BaseFormPresenter {
     this.change = {}; // when data is change
   }
 
-  //   async getObject() {
-  //     const collection = this.view.getCollectionName();
-  //     const id = this.view.getObjectId();
-  //     if (id) {
-  //       const params = { include: ["all"] };
-  //       try {
-  //         this.view.showProgress();
-  //         const object = await this.getObjectUseCase.execute(collection, id, {
-  //           params,
-  //         });
-  //         this.view.hideProgress();
-  //         this.view.setObject(object);
-  //       } catch (error) {
-  //         this.view.hideProgress();
-  //         this.view.showError(error);
-  //       }
-  //     }
-  //   }
-
-  // onChange(field, data) {
-  //   this.change[field] = data;
-  // }
+  async getObject() {
+    const collection = this.view.getCollectionName();
+    const id = this.view.getObjectId();
+    if (id) {
+      const params = { include: ["all"] };
+      try {
+        this.view.showProgress();
+        const object = await this.getObjectUseCase.execute(collection, id, {
+          params,
+        });
+        console.log("getter object", object);
+        this.view.hideProgress();
+        this.view.setObject(object);
+      } catch (error) {
+        this.view.hideProgress();
+        this.view.showError(error);
+      }
+    }
+  }
 
   async save() {
     const collection = this.view.getCollectionName();
@@ -46,8 +44,16 @@ class ConsultationFormPresenter extends BaseFormPresenter {
     const user = this.view.getCurrentUser(); // new add
     const params = this.view.getParams();
     console.log("object get", object);
+    console.log("params", params);
+    console.log("change", this.change);
+    // if (object.id) {
+    //   this.change.id = object.id;
+    // } else {
+    //   this.change.acl = this.view.getAcl();
+    // }
     if (object.id) {
       this.change.id = object.id;
+      this.change.acl = this.view.getAcl();
       console.log("this changessss", this.change);
     } else {
       this.change.acl = this.view.getAcl();
@@ -71,7 +77,7 @@ class ConsultationFormPresenter extends BaseFormPresenter {
       this.view.showProgress();
       await this.save();
       this.view.hideProgress();
-      this.view.showSuccessSnackbar("Successfully saved!");
+      this.view.showSucces("Successfull saved!");
       this.view.navigateBack();
     } catch (error) {
       this.view.hideProgress();

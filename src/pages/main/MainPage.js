@@ -32,6 +32,7 @@ import ChatUserPage from "../chat-user/ChatUserPage";
 import ChatMessagePage from "../chat-message/ChatMessagePage";
 import HomePage from "../home/HomePage";
 import Photo from "../../assets/img/profile_icon.jpg";
+import NewConsultation from "../doctor/medicalRecord/consultationHistory/NewConsultation";
 
 const scheduleMenus = [
   {
@@ -192,10 +193,14 @@ class MainPage extends BasePage {
             />
             <Route
               // path={"/consultation-form/:name/form/:id"}
-              path={"/consultation-form/:id"}
+              path={"/consultation-form/:id/:id"}
               element={<ConsultationFormPage />}
             />
-            <Route path={"/view-schedules"} element={<ViewPage />} />s
+            <Route
+              path={"/add-consultation/:id"}
+              element={<NewConsultation />}
+            />
+            <Route path={"/view-schedules"} element={<ViewPage />} />
             <Route exact path={"/chat"} element={<ChatPage />} />
             <Route exact path={"/chat/user"} element={<ChatUserPage />} />
             <Route exact path={"/message"} element={<ChatMessagePage />} />

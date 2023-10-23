@@ -98,7 +98,9 @@ class ConsultationPresenter extends BaseListPresenter {
 
   onClickAdd(objects) {
     const collection = "patientConsultation";
-    this.view.navigateTo("/add-consultation/" + objects[0].id);
+    console.log("params id", objects)
+    
+    this.view.navigateTo(`/add-consultation/${objects[0].id}`);
   }
   // objects.forEach((object) => {
   //   // const path = "/consultation-form/" + object.id;

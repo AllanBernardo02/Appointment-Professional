@@ -43,9 +43,7 @@ class ConsultationFormPresenter extends BaseFormPresenter {
     const object = this.view.getObject();
     const user = this.view.getCurrentUser(); // new add
     const params = this.view.getParams();
-    console.log("object get", object);
     console.log("params", params);
-    console.log("change", this.change);
     // if (object.id) {
     //   this.change.id = object.id;
     // } else {

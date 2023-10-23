@@ -143,7 +143,7 @@ class ChatUserPage extends BaseListPage {
                   </div>
                 </div>
                 <form className="row align-items-center gx-1" onSubmit={this.onSubmitMessage.bind(this)}>
-                  <div className="col-auto">
+                  {/* <div className="col-auto">
                     <button
                       // onClick={this.onClickAttachment.bind(this)}
                       type="button"
@@ -151,8 +151,8 @@ class ChatUserPage extends BaseListPage {
                     >
                       <i className="bi bi-paperclip fs-5"></i>
                     </button>
-                  </div>
-                  <div className="col">
+                  </div> */}
+                  {/* <div className="col">
                     <InputFactory
                       type="Text"
                       field="content"
@@ -166,7 +166,7 @@ class ChatUserPage extends BaseListPage {
                     <Button className="btn btn-primary mt-3" type="submit">
                       Send <i className="bi bi-send"></i>
                     </Button>
-                  </div>
+                  </div> */}
                 </form>
               </div>
             </div>

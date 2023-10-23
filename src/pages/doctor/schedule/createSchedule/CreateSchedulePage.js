@@ -6,7 +6,7 @@ import NavBar from "../../../../components/navbar";
 import Search from "../../../../components/Search";
 // import FormFactory from "../../../../components/FormFactory";
 import BaseFormPage from "../../../../base/BaseFormPage";
-import { Checkbox, FormFactory } from "nq-component";
+import { Checkbox, FormFactory, InputFactory } from "nq-component";
 import {
   findObjectUseCase,
   getObjectUseCase,
@@ -31,6 +31,10 @@ class CreateSchedulePage extends BaseFormPage {
   getCollectionName() {
     return "schedules";
   }
+
+  setObject({ object }) {
+    this.setState({ object });
+  }
   render() {
     const schema = this.getSchema(this.getCollectionName());
     const object = this.state.object;
@@ -54,11 +58,6 @@ class CreateSchedulePage extends BaseFormPage {
                     <hr className="dropdown-divider" />
                     <h5>Set Date</h5>
                   </div>
-                  {/* <FormFactory
-                    schema={schema}
-                    object={object}
-                    onChange={this.onChange.bind(this)}
-                  /> */}
                   <FormFactory
                     className="col-md-4"
                     schema={schema}

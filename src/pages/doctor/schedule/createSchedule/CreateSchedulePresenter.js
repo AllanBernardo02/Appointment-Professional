@@ -25,6 +25,9 @@ class CreateSchedulePresenter extends BaseFormPresenter {
     const collection = this.view.getCollectionName();
     const user = this.view.getCurrentUser();
     const object = this.view.getObject();
+    console.log(object, "The object");
+    console.log("collection", collection);
+    console.log("User", user);
     if (object.id) {
       this.change.id = object.id;
     } else {

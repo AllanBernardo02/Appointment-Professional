@@ -200,6 +200,10 @@ class MainPage extends BasePage {
               path={"/add-consultation/:id"}
               element={<NewConsultation />}
             />
+            <Route
+              path={"/add-consultation/"}
+              element={<NewConsultation />}
+            />
             <Route path={"/view-schedules"} element={<ViewPage />} />
             <Route exact path={"/chat"} element={<ChatPage />} />
             <Route exact path={"/chat/user"} element={<ChatUserPage />} />

@@ -1,144 +1,27 @@
-// import React from "react";
-// import { findObjectUseCase, saveObjectUseCase } from "../../usecases/object";
-// import { saveFileUseCase, saveImageUseCase } from "../../usecases/file";
-// import Context from "../../AppContext";
-// import { FormFactory as Factory } from "nq-component";
-
-// function FormFactory({ schema, object, onChange, excludeFields, ...props }) {
-//   const context = React.useContext(Context);
-
-//   return (
-//     <Factory
-//       className="col-md-4"
-//       schema={schema}
-//       schemas={context.schemas}
-//       object={object}
-//       onChange={onChange}
-//       excludeFields={excludeFields}
-//       findObject={findObjectUseCase()}
-//       saveObject={saveObjectUseCase()}
-//       saveImage={saveImageUseCase()}
-//       saveFile={saveFileUseCase()}
-//       {...props}
-//     />
-//   );
-// }
-
-// export default FormFactory;
-
-// import React from "react";
-// import {findObjectUseCase, saveObjectUseCase} from "../../usecases/object";
-// import {saveFileUseCase, saveImageUseCase} from "../../usecases/file";
-// import Context from "../../AppContext";
-// import InputFactory from "../InputFactory";
-// import {FormFactory as Factory} from "nq-component";
-
-
-// function FormFactory({schema, object, onChange, excludeFields, ...props}) {
-//     const context = React.useContext(Context);
-
-//     return <Factory
-//         className="col-md-4"
-//         schema={schema}
-//         schemas={context.schemas}
-//         object={object}
-//         onChange={onChange}
-//         excludeFields={excludeFields}
-//         findObject={findObjectUseCase()}
-//         saveObject={saveObjectUseCase()}
-//         saveImage={saveImageUseCase()}
-//         saveFile={saveFileUseCase()}
-//         componentFactory={InputFactory}
-//         {...props}/>
-// }
-
-// export default FormFactory;
-
 import React from "react";
+import {findObjectUseCase, saveObjectUseCase} from "../../usecases/object";
+import {saveFileUseCase, saveImageUseCase} from "../../usecases/file";
+import Context from "../../AppContext";
 import InputFactory from "../InputFactory";
-import FormTab from "./FormTab";
+import {FormFactory as Factory} from "nq-component";
 
 
-function group(schema) {
-    const {fields, sections} = schema;
-    const groups = {
-        "General Details": {}
-    };
-    for (const key in fields) {
-        const {section, ...options} = fields[key];
-        if (sections && sections[section]) {
-            groups[section] = groups[section] || {};
-            groups[section][key] = options;
-        } else {
-            groups["General Details"][key] = options;
-        }
-    }
-    return groups;
+function FormFactory({schema, object, onChange, excludeFields, ...props}) {
+    const context = React.useContext(Context);
+
+    return <Factory
+        className="col-md-4"
+        schema={schema}
+        schemas={context.schemas}
+        object={object}
+        onChange={onChange}
+        excludeFields={excludeFields}
+        findObject={findObjectUseCase()}
+        saveObject={saveObjectUseCase()}
+        saveImage={saveImageUseCase()}
+        saveFile={saveFileUseCase()}
+        componentFactory={InputFactory}
+        {...props}/>
 }
 
-const defaultProps = {
-    excludeFields: []
-};
-
-
-function FormFactory({schema, object, onChange, excludeFields}) {
-    const [_tab, setTab] = React.useState();
-    const tabs = schema.tabs;
-    const sections = schema.sections || {};
-    const groups = group(schema);
-    return (
-        <>
-            <FormTab
-                onSet={setTab}
-                tabs={tabs}/>
-            <div className="row g-3 mt-3">
-                {
-                    Object.keys(groups)
-                        .map(key => {
-                            const fields = groups[key];
-                            const {label} = sections[key] || {};
-                            const components = Object.keys(fields).map((field) => {
-                                if (excludeFields.includes(field)) return null;
-                                let {type, pattern, write, tab, col, ...options} = fields[field];
-                                if ((_tab && tab) && (_tab !== tab)) return null;
-                                if (write === false) return null;
-                                if (field === 'password') {
-                                    type = "Password";
-                                }
-                                return (
-                                    <div className={col || "col-md-4"}
-                                         key={field}>
-                                        <label
-                                            className="form-label fs-sm">{field}</label>
-                                        <InputFactory
-                                            object={object}
-                                            field={field}
-                                            onChange={onChange.bind(this, field)}
-                                            type={type}
-                                            className="fs-sm"
-                                            {...options}/>
-                                    </div>
-                                )
-                            }).filter(c => c);
-                            return (
-                                <>
-                                    {
-                                        components.length > 0 && (
-                                            <div className="col-12">
-                                                <p className="small fw-bold mb-0 ms-1">{label || key}</p>
-                                                <hr/>
-                                            </div>
-                                        )
-                                    }
-                                    {components}
-                                </>
-                            )
-                        })
-                }
-            </div>
-        </>
-    )
-}
-
-FormFactory.defaultProps = defaultProps;
 export default FormFactory;

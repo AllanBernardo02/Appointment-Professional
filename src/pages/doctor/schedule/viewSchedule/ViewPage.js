@@ -8,6 +8,10 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./ViewPage.css";
 import NavBar from "../../../../components/navbar";
+import withRouter from "../../../../withRouter";
+import OutputCard from "../../../../components/OutputCard";
+// import avatar from "../../../../assets/img";
+// import dialog from "nq-component/dist/Modal/dialog";
 
 class ViewPage extends BaseListPage {
   constructor(props) {
@@ -15,8 +19,8 @@ class ViewPage extends BaseListPage {
     this.presenter = new ViewPresenter(this, findObjectUseCase());
     this.state = {
       objects: [],
-      selectedDate: null, // Track the selected date
-      timeSlots: null,
+      selectedDate: null,
+      timeSlots: [],
     };
   }
 
@@ -31,53 +35,66 @@ class ViewPage extends BaseListPage {
     console.log("Selected Date:", selectedDate);
   };
 
+  handleTimeSlotChange(event) {
+    const selectedTime = event.target.value;
+    console.log("timechange", selectedTime);
+  }
+
   getTimeSlots = () => {
     const { objects, selectedDate } = this.state;
 
-    console.log("Mali", selectedDate);
-
-    if (selectedDate) {
-      const filteredObjects = objects.filter((o) => {
-        const date = new Date(o?.date);
-        return date.toLocaleDateString().includes(selectedDate);
-      });
-
-      if (filteredObjects.length > 0) {
-        return filteredObjects[0].time.map((t) => (
-          <ul key={t}>
-            <label>
-              <input
-                type="radio"
-                name="timeSlot"
-                value={t}
-                onChange={this.handleTimeSlotChange}
-              />
-              {t}
-            </label>
-          </ul>
-        ));
-      }
+    if (!selectedDate) {
+      return null;
     }
-    return null;
+
+    const filteredObjects = objects.filter((o) => {
+      const date = new Date(o?.date);
+      return date.toLocaleDateString() === selectedDate;
+    });
+
+    if (filteredObjects.length === 0) {
+      return null;
+    }
+
+    const firstObject = filteredObjects[0];
+
+    if (!firstObject.time || firstObject.time.length === 0) {
+      return null;
+    }
+
+    return (
+      <div>
+        <OutputCard obj={firstObject} time={firstObject.time} />
+      </div>
+    );
   };
+
+  // openModal = async () => {
+  //   const { selectedDate } = this.state;
+  //   if (selectedDate) {
+  //     const date = this.setState({ selectedDate });
+
+  //     dialog.fire({})
+  //   }
+  // };
 
   tileClassName = ({ date }) => {
     const { objects } = this.state;
     const formattedDate = new Date(date).toLocaleDateString();
-    console.log("hihih", formattedDate);
-
+    // console.log("hihih", formattedDate);
     const hasTimeSlots = objects.some((object) => {
       const formatted = new Date(object?.date).toLocaleDateString();
       return formattedDate.includes(formatted);
     });
-    console.log("hehehe", hasTimeSlots);
+    // console.log("hehehe", hasTimeSlots);
 
     return hasTimeSlots ? "highlighted-date" : "";
   };
 
   render() {
-    const { objects, selectedDate } = this.state;
-    console.log("Time red", selectedDate);
+    const { objects, selectedDate, timeSlots } = this.state;
+    // console.log("Time select", selectedDate);
+    // console.log("test")
 
     return (
       <>
@@ -88,16 +105,12 @@ class ViewPage extends BaseListPage {
             tileClassName={this.tileClassName}
           />
         </div>
-
         {selectedDate && (
           <div
-            className="mt-4"
+            className=""
             style={{ display: "flex", justifyContent: "center" }}
           >
-            <div
-              className="mt-3"
-              style={{ backgroundColor: "white", padding: "20px" }}
-            >
+            <div className="mt-3" style={{ padding: "20px" }}>
               {this.getTimeSlots() || (
                 <p>No time slots available for the selected date.</p>
               )}
@@ -109,4 +122,4 @@ class ViewPage extends BaseListPage {
   }
 }
 
-export default ViewPage;
+export default withRouter(ViewPage);

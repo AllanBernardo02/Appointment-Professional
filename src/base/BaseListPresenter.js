@@ -38,7 +38,8 @@ class BaseListPresenter {
         query
       );
       this.objects = this.objects.concat(objects);
-      this.view.setCount(count);
+      console.log(this.objects, "the objects");
+      // this.view.setCount(count);
       this.view.setObjects(this.objects);
     } catch (error) {
       this.view.showError(error);

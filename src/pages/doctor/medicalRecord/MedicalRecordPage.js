@@ -170,7 +170,7 @@ class MedicalRecordPage extends BaseListPage {
                 // groups={schema.groups}
                 objects={objects}
                 className="mt-3"
-                selectable
+                hasSelect={false}
                 collapsable
                 // selected={selected}
                 // onSelect={this.onSelect.bind(this)}
@@ -204,7 +204,6 @@ class MedicalRecordPage extends BaseListPage {
             </div>
           </InfiniteScroll>
         </div>
-
         <div className="position-fixed bottom-0 end-0 m-4">
           <Button
             className="shadow-sm bg-primary btn btn-primary"

@@ -38,6 +38,7 @@ class CollectionFormPage extends BaseFormPage {
                       schema={schema}
                       object={object}
                       onChange={this.onChange.bind(this)}
+                      excludeFields={["createdAt", "updatedAt"]}
                     />
                   </div>
 

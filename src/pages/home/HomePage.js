@@ -5,6 +5,7 @@ import withRouter from "../../withRouter";
 import NavBar2 from "../../components/navbar2";
 import getProfile from "../../getProfile";
 import Photo from "../../assets/img/profile_icon.jpg";
+import { Link } from "react-router-dom";
 
 const textstyle = {
   color: "rgba(0, 86, 86, 1)",
@@ -33,7 +34,6 @@ class HomePage extends BasePage {
       case "account":
         this.navigateTo("/account");
         break;
-
       default:
         break;
     }
@@ -178,10 +178,12 @@ class HomePage extends BasePage {
                     type="button"
                     className="btn btn-sm btn-link fs-5  text-dark"
                   >
-                    <i
-                      className=" bi bi-calendar-week"
-                      style={{ color: "rgba(0, 86, 86, 1)" }}
-                    ></i>
+                    <Link to="/view-schedules/">
+                      <i
+                        className=" bi bi-calendar-week"
+                        style={{ color: "rgba(0, 86, 86, 1)" }}
+                      ></i>
+                    </Link>
                   </button>
                 </div>
                 <p style={textstyle}>Calendar View</p>

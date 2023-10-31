@@ -75,7 +75,7 @@ class ConsultationFormPresenter extends BaseFormPresenter {
       this.view.showProgress();
       await this.save();
       this.view.hideProgress();
-      this.view.showSucces("Successfull saved!");
+      this.view.showSuccess("Successfull saved!");
       this.view.navigateBack();
     } catch (error) {
       this.view.hideProgress();

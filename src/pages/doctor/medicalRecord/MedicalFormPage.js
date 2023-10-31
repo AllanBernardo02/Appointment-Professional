@@ -63,7 +63,7 @@ class MedicalFormPage extends BaseFormPage {
             <form onSubmit={this.onSubmitForm.bind(this)}>
               <div className="row g-3 mb-3">
                 <div className="px-2">
-                  <p className="small fw-bold mb-0 ms-1">Patient Details</p>
+                  <p className="small fw-bold mb-0">Patient Details</p>
                   <hr className="dropdown-divider" />
                 </div>
 
@@ -71,6 +71,7 @@ class MedicalFormPage extends BaseFormPage {
                   schema={schema}
                   object={object}
                   onChange={this.onChange.bind(this)}
+                  excludeFields={["createdAt", "updatedAt"]}
                 />
               </div>
 

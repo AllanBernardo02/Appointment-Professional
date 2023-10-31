@@ -90,12 +90,12 @@ const menus = [
     route: "/account",
     access: ["ADMIN"],
   },
-  {
-    name: "Sample",
-    icon: "bi bi-gear",
-    route: "/tutorial",
-    access: ["ADMIN"],
-  },
+  // {
+  //   name: "Sample",
+  //   icon: "bi bi-gear",
+  //   route: "/tutorial",
+  //   access: ["ADMIN"],
+  // },
 ];
 
 class MainPage extends BasePage {

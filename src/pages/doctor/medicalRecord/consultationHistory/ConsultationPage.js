@@ -7,6 +7,7 @@ import dateFormat from "../../../../dateFormat";
 import NavBar from "../../../../components/navbar";
 import { Button, Table } from "nq-component";
 import BaseListPage from "../../../../base/BaseListPage";
+import profile from "../../../../assets/img/profile_icon.jpg";
 
 class ConsultationPage extends BaseListPage {
   constructor(props) {
@@ -76,8 +77,6 @@ class ConsultationPage extends BaseListPage {
     this.presenter.onClickItem(index, field);
   }
 
-  
-
   render() {
     const objects = this.state.objects;
     const consult = this.state.consults;
@@ -96,15 +95,11 @@ class ConsultationPage extends BaseListPage {
               <div key={index} className="m-5">
                 <div className="d-flex flex-wrap">
                   <div className="mr-3">
-                    {object && object["profile"] ? (
-                      <img
-                        style={{ width: "130px", height: "130px" }}
-                        src={object["profile"]}
-                        alt=""
-                      />
-                    ) : (
-                      <i className="bi bi-person-circle fs-1"></i>
-                    )}
+                    <img
+                      style={{ width: "130px", height: "130px" }}
+                      src={object["profile"] || profile}
+                      alt=""
+                    />
                   </div>
                   <ul className="list-unstyled">
                     <li>
@@ -140,7 +135,6 @@ class ConsultationPage extends BaseListPage {
                 </div>
               </div>
             ))}
-
             <Table
               fields={schema.fields}
               objects={consult}

@@ -6,7 +6,6 @@ import NavBar from "../../../../components/navbar";
 import Search from "../../../../components/Search";
 // import FormFactory from "../../../../components/FormFactory";
 import BaseFormPage from "../../../../base/BaseFormPage";
-import { Checkbox, FormFactory, InputFactory } from "nq-component";
 import {
   findObjectUseCase,
   getObjectUseCase,
@@ -14,6 +13,9 @@ import {
   upsertUseCase,
 } from "../../../../usecases/object";
 import { saveFileUseCase, saveImageUseCase } from "../../../../usecases/file";
+import FormFactory from "../../../../components/FormFactory";
+import withRouter from "../../../../withRouter";
+import { Button } from "nq-component";
 
 class CreateSchedulePage extends BaseFormPage {
   constructor(props) {
@@ -21,7 +23,8 @@ class CreateSchedulePage extends BaseFormPage {
     this.presenter = new CreateSchedulePresenter(
       this,
       getObjectUseCase(),
-      upsertUseCase()
+      // upsertUseCase(),
+      saveObjectUseCase()
     );
     this.state = {
       object: {},
@@ -32,11 +35,9 @@ class CreateSchedulePage extends BaseFormPage {
     return "schedules";
   }
 
-  setObject({ object }) {
-    this.setState({ object });
-  }
   render() {
     const schema = this.getSchema(this.getCollectionName());
+    console.log("schema", schema);
     const object = this.state.object;
     console.log("Schema", schema);
     return (
@@ -61,13 +62,9 @@ class CreateSchedulePage extends BaseFormPage {
                   <FormFactory
                     className="col-md-4"
                     schema={schema}
-                    schemas={this.getSchemas()}
                     object={object}
                     onChange={this.onChange.bind(this)}
-                    findObject={findObjectUseCase()}
-                    saveObject={saveObjectUseCase()}
-                    saveImage={saveImageUseCase()}
-                    saveFile={saveFileUseCase()}
+                    excludeFields={["createdAt", "updatedAt", "id"]}
                   />
                 </div>
 
@@ -85,4 +82,4 @@ class CreateSchedulePage extends BaseFormPage {
   }
 }
 
-export default CreateSchedulePage;
+export default withRouter(CreateSchedulePage);

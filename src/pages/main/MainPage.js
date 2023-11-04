@@ -33,6 +33,9 @@ import ChatMessagePage from "../chat-message/ChatMessagePage";
 import HomePage from "../home/HomePage";
 import Photo from "../../assets/img/profile_icon.jpg";
 import NewConsultation from "../doctor/medicalRecord/consultationHistory/NewConsultation";
+import ContractPage from "../TEST/contract/ContractPage";
+import ViewContract from "../TEST/view/ViewContract";
+import ContractTemplate from "../TEST/template/ContractTemplate";
 
 const scheduleMenus = [
   {
@@ -44,6 +47,19 @@ const scheduleMenus = [
     name: "View Schedule",
     icon: "bi bi-calendar3",
     route: "/view-schedules",
+  },
+];
+
+const contractMenu = [
+  {
+    name: "Create Contract",
+    icon: "bi bi-card-text",
+    route: "/create-contract",
+  },
+  {
+    name: "View Contract",
+    icon: "bi bi-calendar3",
+    route: "/view-contracts",
   },
 ];
 
@@ -83,6 +99,11 @@ const menus = [
     icon: "bi bi-card-checklist",
     route: "/appointment",
     access: ["ADMIN"],
+  },
+  {
+    name: "Contracts",
+    icon: "bi bi-briefcase",
+    route: contractMenu,
   },
   {
     name: "Settings",
@@ -200,10 +221,10 @@ class MainPage extends BasePage {
               path={"/add-consultation/:id"}
               element={<NewConsultation />}
             />
-            <Route
-              path={"/add-consultation/"}
-              element={<NewConsultation />}
-            />
+            <Route path={"/create-contract"} element={<ContractPage />} />
+            <Route path={"/view-contracts"} element={<ViewContract />} />
+            <Route path={"/contract/:id"} element={<ContractTemplate />} />
+            <Route path={"/add-consultation/"} element={<NewConsultation />} />
             <Route path={"/view-schedules"} element={<ViewPage />} />
             <Route exact path={"/chat"} element={<ChatPage />} />
             <Route exact path={"/chat/user"} element={<ChatUserPage />} />

@@ -81,7 +81,7 @@ class ConsultationPage extends BaseListPage {
     const objects = this.state.objects;
     const consult = this.state.consults;
     const schema = this.getSchema("patientConsultation");
-    console.log(consult, "the consult");
+    // console.log(consult, "the consult");
     console.log("get naba?", objects);
     return (
       <>

@@ -24,7 +24,6 @@ class BaseListPresenter {
     const collection = this.view.getCollectionName();
     const skip = (this.current - 1) * this.limit;
     const query = {
-      count: true,
       limit: this.limit,
       skip: skip,
       where: this.where,
@@ -33,7 +32,7 @@ class BaseListPresenter {
     };
     this.view.showProgress();
     try {
-      const { count, objects } = await this.findObjectUseCase.execute(
+      const { objects } = await this.findObjectUseCase.execute(
         collection,
         query
       );

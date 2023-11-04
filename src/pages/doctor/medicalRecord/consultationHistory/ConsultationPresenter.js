@@ -28,8 +28,6 @@ class ConsultationPresenter extends BaseListPresenter {
     const user = this.view.getCurrentUser();
     const params = this.view.getParams();
 
-    console.log("User haha", params);
-
     const skip = (this.current - 1) * this.limit;
     const query = {
       count: true,
@@ -49,8 +47,6 @@ class ConsultationPresenter extends BaseListPresenter {
       this.objects = this.objects.concat(objects);
       // this.view.setCount(count);
       this.view.setObjects(this.objects);
-      console.log(objects, "THE OBJECTS!@#");
-      console.log(this.objects, "THE OBJECTS");
     } catch (error) {
       this.view.showError(error);
     } finally {
@@ -62,8 +58,6 @@ class ConsultationPresenter extends BaseListPresenter {
     const collection = "patientConsultation";
     const user = this.view.getCurrentUser();
     const params = this.view.getParams();
-
-    console.log("User haha", params);
 
     const skip = (this.current - 1) * this.limit;
     const query = {
@@ -85,9 +79,6 @@ class ConsultationPresenter extends BaseListPresenter {
         "patientConsultation",
         query
       );
-      // this.objects = this.objects.concat(objects);
-      // this.view.setCounts(count);
-      console.log("Bkt doble", objects);
       this.view.setConsults(objects);
     } catch (error) {
       this.view.showError(error);
@@ -98,8 +89,7 @@ class ConsultationPresenter extends BaseListPresenter {
 
   onClickAdd(objects) {
     const collection = "patientConsultation";
-    console.log("params id", objects)
-    
+
     this.view.navigateTo(`/add-consultation/${objects[0].id}`);
   }
   // objects.forEach((object) => {
@@ -129,7 +119,6 @@ class ConsultationPresenter extends BaseListPresenter {
     const object = consult[index];
     // const collection = this.view.getCollectionName();
     const params = this.view.getParams();
-    console.log("params", params);
     this.view.navigateTo(`/consultation-form/${params.id}/${object.id}`);
   }
 }

@@ -1,37 +1,33 @@
-import BaseFormPresenter from "../../../base/BaseFormPresenter";
+import BaseListPresenter from "../../../base/BaseListPresenter";
 
-class ContractPresenter extends BaseFormPresenter {
-  async submit() {
-    if (Object.values(this.change).length === 0) {
-      this.view.navigateBack();
-      return;
-    }
+class ContractPresenter extends BaseListPresenter {
+  async getObjects() {
+    const collection = this.view.getCollectionName();
+    const skip = (this.current - 1) * this.limit;
+    const query = {
+      count: true,
+      limit: this.limit,
+      skip: skip,
+      // where: this.where,
+      where: this.where,
+      include: ["all"],
+      sort: { createdAt: -1 },
+    };
+    this.view.showProgress();
     try {
-      this.view.showProgress();
-      await this.save();
-      this.view.hideProgress();
-      this.view.showSuccessSnackbar("Contract Details successfully saved!");
-      this.view.navigateBack();
+      const objects = await this.findObjectUseCase.execute(collection, query);
+      this.objects = this.objects.concat(objects);
+      // this.view.setCount(count);
+      this.view.setObjects(this.objects);
     } catch (error) {
-      this.view.hideProgress();
       this.view.showError(error);
+    } finally {
+      this.view.hideProgress();
     }
   }
 
-  async save() {
-    const collection = this.view.getCollectionName();
-    const object = this.view.getObject();
-    const user = this.view.getCurrentUser();
-    if (object.id) {
-      this.change.id = object.id;
-    } else {
-      this.change.acl = this.view.getAcl();
-    }
-    try {
-      await this.upsertUseCase.execute(collection, this.change);
-    } catch (error) {
-      throw error;
-    }
+  onClickExport() {
+    this.view.exportPDF();
   }
 }
 

@@ -1,72 +1,139 @@
 import React from "react";
-import BaseFormPage from "../../../base/BaseFormPage";
 import ContractPresenter from "./ContractPresenter";
-import { getObjectUseCase, upsertUseCase } from "../../../usecases/object";
+import { findObjectUseCase, upsertUseCase } from "../../../usecases/object";
 import withRouter from "../../../withRouter";
 import NavBar2 from "../../../components/navbar2";
-import { FormFactory } from "nq-component";
+import { Button, InfiniteScroll, Table } from "nq-component";
+import BaseListPage from "../../../base/BaseListPage";
+import { exportCSVUseCase } from "../../../usecases/csv/usecases";
+import {
+  addSchemaUseCase,
+  deleteSchemaUseCase,
+  updateSchemaUseCase,
+} from "../../../usecases/schema/usecases";
+import printComponent from "../../../printComponent";
+import Template from "../components/file";
 
-class ContractPage extends BaseFormPage {
+class ContractPage extends BaseListPage {
   constructor(props) {
     super(props);
     this.presenter = new ContractPresenter(
       this,
-      getObjectUseCase(),
-      upsertUseCase()
+      findObjectUseCase(),
+      // deleteObjectUseCase(),
+      upsertUseCase(),
+      exportCSVUseCase(),
+      addSchemaUseCase(),
+      updateSchemaUseCase(),
+      deleteSchemaUseCase()
     );
     this.state = {
-      object: {},
+      objects: [],
+      progress: true,
+      selected: [],
+      total: 0,
+      count: 0,
     };
+    this.contractPDF = React.createRef();
   }
 
   getCollectionName() {
     return "contractDetails";
   }
 
-  onSubmitForm(e) {
-    e.preventDefault();
-    this.presenter.submit();
+  onClickExport() {
+    this.presenter.onClickExport();
+  }
+
+  exportPDF() {
+    printComponent(this.contractPDF.current, "Contracts");
   }
 
   render() {
     const schema = this.getSchema("contractDetails");
-    const object = this.state.object;
+    console.log("schema", schema);
+    const objects = this.state.objects;
+    const selected = this.state.selected;
+    console.log("selected", selected);
+    const progress = this.state.progress;
+    const count = this.state.count;
+    console.log("object", objects);
     return (
       <>
-        <NavBar2 />
-        <div className="container p-3 px-lg-5 py-lg-4 overflow-auto">
-          <nav>
-            <div className="nav nav-tabs"></div>
-          </nav>
-          <div className="mt-3 bg-white shadow rounded p-3 px-lg-5 py-lg-4">
-            <form onSubmit={this.onSubmitForm.bind(this)}>
-              <div className="row g-3 mb-3">
-                <div className="px-2">
-                  <p className="small fw-bold mb-2">Contract Details</p>
-                  <hr className="dropdown-divider" />
-                </div>
-                <FormFactory
-                  className="col-md-4"
-                  schema={schema}
-                  object={object}
-                  onChange={this.onChange.bind(this)}
-                  excludeFields={["createdAt", "updatedAt", "id"]}
-                />
-              </div>
-              <div className="mt-3">
-                <button type="submit" className="btn btn-primary fs-sm me-3">
-                  <i className="bi bi-file-earmark-check me-2"></i>SAVE
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-light fs-sm"
-                  onClick={this.onClickBack.bind(this)}
-                >
-                  GO BACK
-                </button>
-              </div>
-            </form>
+        <div className="d-none">
+          <div ref={this.contractPDF}>
+            <div>
+              {selected.map((selected) => (
+                <Template selected={selected} />
+              ))}
+            </div>
           </div>
+        </div>
+        <NavBar2 />
+        <div className="overflow-auto">
+          <InfiniteScroll className="h-100" loadMore={this.loadMore.bind(this)}>
+            <div className="p-3 p-lg-4">
+              <h1 className="fw-bold mt-3 text-capitalize">Contract List</h1>
+              {/* <Search
+                schemas={this.getSchemas()}
+                className="mt-3"
+                onSubmit={this.searchSubmit.bind(this)}
+                fields={schema.fields}
+              /> */}
+              <Table
+                fields={schema.fields}
+                objects={objects}
+                selectable
+                collapsable
+                excludeFields={Object.keys(schema.fields).reduce(
+                  (acc, key) => {
+                    const options = schema.fields[key];
+                    if (options.read === false) {
+                      acc.push(key);
+                    }
+                    switch (options._type || options.type) {
+                      case "Relation":
+                      case "Array":
+                      case "Object":
+                      case "File":
+                        acc.push(key);
+                        break;
+                      default:
+                    }
+                    return acc;
+                  },
+                  ["acl", "password", "createdAt", "updatedAt"]
+                )}
+                selected={selected}
+                onSelect={this.onSelect.bind(this)}
+                onSelectAll={this.onSelectAll.bind(this)}
+                progress={progress}
+                onClickItem={this.onClickItem.bind(this)}
+                className="mt-3"
+                actions={[
+                  {
+                    label: "Edit",
+                    onClick: this.onClickItem.bind(this),
+                    className: "btn btn-primary ms-2",
+                  },
+                  {
+                    label: "Print Contract",
+                    onClick: this.onClickExport.bind(this),
+                    className: "btn btn-primary ms-2",
+                  },
+                ]}
+              />
+            </div>
+          </InfiniteScroll>
+        </div>
+        <div className="position-fixed bottom-0 end-0 m-4">
+          <Button
+            className="shadow-sm bg-primary btn btn-primary"
+            onClick={this.onClickAdd.bind(this)}
+            style={{ width: "50px", height: "50px", borderRadius: "25px" }}
+          >
+            <i className="bi bi-plus-lg" />
+          </Button>
         </div>
       </>
     );

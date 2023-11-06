@@ -1,18 +1,18 @@
 import React from "react";
 
-function Template({ object }) {
+function Template({ selected }) {
   return (
     <>
       <div>MWEEB</div>
       <div>HARD CODED FOR NOW</div>
 
-      <div>{object.date}</div>
-      <div>{object.title}</div>
-      <div>{object.companyName}</div>
-      <div>{object.clientName}</div>
-      <div>{object.companyName}</div>
-      <div>{object.companyAddress}</div>
-      <div>{object.clientPosition}</div>
+      <div>{selected.date}</div>
+      <div>{selected.title}</div>
+      <div>{selected.companyName}</div>
+      <div>{selected.clientName}</div>
+      <div>{selected.companyName}</div>
+      <div>{selected.companyAddress}</div>
+      <div>{selected.clientPosition}</div>
     </>
   );
 }

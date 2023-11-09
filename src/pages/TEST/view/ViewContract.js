@@ -33,23 +33,23 @@ class ViewContract extends BasePage {
   }
 
   render() {
-    const objects = this.state.objects;
-    console.log("objects", objects);
+    const styles = {
+      borderLeft: "100vw solid transparent",
+      borderTop: "50vw solid black",
+      marginTop: "-3.5vw",
+      width: 0,
+      height: 0,
+    };
     return (
       <>
-        <NavBar2 />
-        <div className="container">
-          <div className="row align-items-center">
-            {objects.map((object, index) => (
-              <ContractCard
-                className="col-md-4"
-                object={object}
-                onClickView={() => this.onClickView(index)}
-                key={index}
-              />
-            ))}
+        <div>
+          <div className="">
+            <div className="d-flex justify-content-end p-2">
+              <h6 className="fs-sm">mweeb.com</h6>
+            </div>
           </div>
         </div>
+        <div className="" style={styles}></div>
       </>
     );
   }

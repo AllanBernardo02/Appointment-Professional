@@ -11,8 +11,8 @@ import {
   deleteSchemaUseCase,
   updateSchemaUseCase,
 } from "../../../usecases/schema/usecases";
-import printComponent from "../../../printComponent";
 import Template from "../components/file";
+import printComponent from "../../../printComponent";
 
 class ContractPage extends BaseListPage {
   constructor(props) {
@@ -60,13 +60,9 @@ class ContractPage extends BaseListPage {
     console.log("object", objects);
     return (
       <>
-        <div className="d-none">
+        <div className="d-none2">
           <div ref={this.contractPDF}>
-            <div>
-              {selected.map((selected) => (
-                <Template selected={selected} />
-              ))}
-            </div>
+            <Template selected={selected} />
           </div>
         </div>
         <NavBar2 />

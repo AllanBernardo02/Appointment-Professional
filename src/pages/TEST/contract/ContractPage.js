@@ -60,7 +60,7 @@ class ContractPage extends BaseListPage {
     console.log("object", objects);
     return (
       <>
-        <div className="d-none2">
+        <div className="d-none">
           <div ref={this.contractPDF}>
             <Template selected={selected} />
           </div>
